@@ -1,0 +1,328 @@
+# =============================================================================
+# Sway configuration
+# =============================================================================
+#
+# Reference:
+#   man 5 sway
+#
+# Reload configuration:
+#   Super + Shift + C
+#
+# Exit Sway:
+#   Super + Shift + E
+# =============================================================================
+
+
+# -----------------------------------------------------------------------------
+# Distribution-provided configuration
+# -----------------------------------------------------------------------------
+
+# Load variables and snippets provided by Debian/LMDE packages.
+include /etc/sway/config-vars.d/*
+
+
+# -----------------------------------------------------------------------------
+# Variables
+# -----------------------------------------------------------------------------
+
+# Mod4 is normally the Super/Windows key.
+# Mod1 would normally be Alt.
+set $mod Mod4
+
+# Main applications.
+set $term foot
+set $menu wofi --show drun
+set $browser firefox-esr
+set $file_manager nemo
+
+
+# -----------------------------------------------------------------------------
+# Output configuration
+# -----------------------------------------------------------------------------
+
+# List connected displays:
+#   swaymsg -t get_outputs
+#
+# Example:
+# output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# Example wallpaper:
+ output * bg ~/Downloads/test2.jpg fill
+
+# Border gaps
+default_border pixel 2
+gaps inner 4px
+gaps outer 4px
+
+# -----------------------------------------------------------------------------
+# Input configuration
+# -----------------------------------------------------------------------------
+
+# List input devices:
+#   swaymsg -t get_inputs
+#
+# This generic configuration applies to all touchpads.
+# Uncomment it if you are using a notebook.
+#
+# input type:touchpad {
+#     tap enabled
+#     dwt enabled
+#     natural_scroll enabled
+#     middle_emulation enabled
+# }
+
+# Brazilian ABNT2 keyboard.
+# Uncomment if Sway does not automatically use the correct layout.
+#
+ input type:keyboard {
+     xkb_layout br
+     xkb_variant thinkpad
+}
+
+
+# -----------------------------------------------------------------------------
+# Session applications
+# -----------------------------------------------------------------------------
+
+# Notification daemon.
+exec mako
+
+# NetworkManager system tray applet.
+exec nm-applet --indicator
+
+# Bluetooth system tray applet.
+exec blueman-applet
+
+# Graphical authentication agent for administrative operations.
+exec lxqt-policykit-agent
+
+# Waybar replaces Sway's built-in swaybar.
+exec waybar
+
+
+# -----------------------------------------------------------------------------
+# Idle, locking and display power
+# -----------------------------------------------------------------------------
+
+# Lock after 5 minutes.
+# Turn displays off after 10 minutes.
+# Lock the session before the computer suspends.
+exec swayidle -w \
+    timeout 300 'swaylock -f -c 000000' \
+    timeout 600 'swaymsg "output * power off"' \
+        resume 'swaymsg "output * power on"' \
+    before-sleep 'swaylock -f -c 000000'
+
+
+# -----------------------------------------------------------------------------
+# Basic application shortcuts
+# -----------------------------------------------------------------------------
+
+# Open terminal.
+bindsym $mod+Return exec $term
+
+# Open application launcher.
+bindsym $mod+d exec $menu
+
+# Open file manager.
+bindsym $mod+e exec $file_manager
+
+# Open browser.
+#
+# Super+B is kept for Sway's horizontal split command, so the browser uses
+# Super+Shift+B.
+bindsym $mod+Shift+b exec $browser
+
+# Lock session.
+bindsym $mod+l exec swaylock -f -c 000000
+
+# Close focused window.
+bindsym $mod+q kill
+
+# Reload this configuration file.
+bindsym $mod+Shift+c reload
+
+# Exit Sway after displaying a confirmation dialog.
+bindsym $mod+Shift+e exec swaynag \
+    -t warning \
+    -m 'Do you really want to exit Sway?' \
+    -B 'Yes, exit Sway' 'swaymsg exit'
+
+
+# -----------------------------------------------------------------------------
+# Mouse behavior
+# -----------------------------------------------------------------------------
+
+# Hold Super and drag floating windows with the left mouse button.
+# Hold Super and use the right mouse button to resize them.
+floating_modifier $mod normal
+
+
+# -----------------------------------------------------------------------------
+# Focus navigation
+# -----------------------------------------------------------------------------
+
+# Change focused window using arrow keys.
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+
+# -----------------------------------------------------------------------------
+# Moving windows
+# -----------------------------------------------------------------------------
+
+# Move the focused window using arrow keys.
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+# -----------------------------------------------------------------------------
+# Workspaces
+# -----------------------------------------------------------------------------
+
+# Switch workspaces.
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# Move the focused window to another workspace.
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+
+
+# -----------------------------------------------------------------------------
+# Window layouts
+# -----------------------------------------------------------------------------
+
+# Define the direction in which the next window should be inserted.
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Change the layout of the current container.
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+
+# This was originally Super+E, but Super+E now opens Nemo.
+bindsym $mod+t layout toggle split
+
+# Toggle fullscreen.
+bindsym $mod+f fullscreen
+
+# Toggle the focused window between tiled and floating.
+bindsym $mod+Shift+space floating toggle
+
+# Switch focus between tiled and floating windows.
+bindsym $mod+space focus mode_toggle
+
+# Focus the parent container.
+bindsym $mod+a focus parent
+
+
+# -----------------------------------------------------------------------------
+# Scratchpad
+# -----------------------------------------------------------------------------
+
+# Send the focused window to the scratchpad.
+bindsym $mod+Shift+minus move scratchpad
+
+# Show or hide scratchpad windows.
+bindsym $mod+minus scratchpad show
+
+
+# -----------------------------------------------------------------------------
+# Resize mode
+# -----------------------------------------------------------------------------
+
+mode "resize" {
+    # Resize using arrow keys.
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Leave resize mode.
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Enter resize mode.
+bindsym $mod+r mode "resize"
+
+
+# -----------------------------------------------------------------------------
+# Audio controls
+# -----------------------------------------------------------------------------
+
+# --locked allows these keys to continue working while the session is locked.
+
+bindsym --locked XF86AudioRaiseVolume \
+    exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+
+bindsym --locked XF86AudioLowerVolume \
+    exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+
+bindsym --locked XF86AudioMute \
+    exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+bindsym --locked XF86AudioMicMute \
+    exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+
+# -----------------------------------------------------------------------------
+# Media controls
+# -----------------------------------------------------------------------------
+
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
+
+
+# -----------------------------------------------------------------------------
+# Brightness controls
+# -----------------------------------------------------------------------------
+
+bindsym --locked XF86MonBrightnessUp \
+    exec brightnessctl set +5%
+
+bindsym --locked XF86MonBrightnessDown \
+    exec brightnessctl set 5%-
+
+
+# -----------------------------------------------------------------------------
+# Screenshots
+# -----------------------------------------------------------------------------
+
+# Print:
+# Select a region and save it inside the XDG Pictures directory.
+bindsym Print exec ~/.config/sway/scripts/screenshot-save.sh
+
+# Super+Print:
+# Select a region and copy the image directly to the clipboard.
+bindsym $mod+Print exec ~/.config/sway/scripts/screenshot-copy.sh
+
+
+# -----------------------------------------------------------------------------
+# Additional distribution configuration
+# -----------------------------------------------------------------------------
+
+# Load configuration fragments installed by Debian/LMDE packages.
+include /etc/sway/config.d/*

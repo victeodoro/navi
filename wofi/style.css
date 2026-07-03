@@ -1,0 +1,96 @@
+/* =======================
+   WINDOW
+   ======================= */
+window {
+    margin: 0px;
+    padding: 14px;
+    background-color: rgba(15, 20, 25, 0.96);
+    border-radius: 14px;
+    border: 1px solid #2a3038;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.75);
+}
+
+/* =======================
+   INPUT
+   ======================= */
+#input {
+    margin: 8px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #2a3038;
+    background-color: rgba(21, 27, 34, 0.95);
+    color: #dce3ea;
+}
+
+#input:focus {
+    border: 1px solid #4fa3c7;
+    box-shadow: inset 0 0 0 1px rgba(79, 163, 199, 0.35);
+}
+
+/* =======================
+   BOXES
+   ======================= */
+#inner-box,
+#outer-box {
+    margin: 6px;
+    padding: 8px;
+    background-color: transparent;
+}
+
+/* =======================
+   SCROLL
+   ======================= */
+#scroll {
+    margin-left: 8px;
+}
+
+/* =======================
+   ENTRIES
+   ======================= */
+#entry {
+    padding: 10px 12px;
+    margin: 2px 0;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #cfd6dc;
+}
+
+/* Iconos */
+#entry icon {
+    margin-right: 14px;
+    color: #6b8fb3;
+}
+
+/* Hover */
+#entry:hover {
+    background-color: rgba(79, 163, 199, 0.15);
+}
+
+/* =======================
+   ENTRY SELECTED
+   ======================= */
+#entry:selected {
+    background: linear-gradient(
+        90deg,
+        rgba(79, 163, 199, 0.35),
+        rgba(79, 163, 199, 0.18)
+    );
+    color: #ffffff;
+}
+
+#text:selected {
+    color: #ffffff;
+}
+
+/* =======================
+   SCROLLBAR
+   ======================= */
+scrollbar slider {
+    background-color: rgba(79, 163, 199, 0.4);
+    border-radius: 6px;
+}
+
+scrollbar trough {
+    background-color: rgba(42, 48, 56, 0.55);
+    border-radius: 6px;
+}
