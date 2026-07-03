@@ -22,6 +22,7 @@ sudo apt install -y \
 echo "==> Installing Sway and session components..."
 sudo apt install -y \
     foot \
+    foot-themes \
     lxqt-policykit \
     sway \
     swaybg \
