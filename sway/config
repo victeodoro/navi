@@ -64,12 +64,12 @@ gaps outer 4px
 # This generic configuration applies to all touchpads.
 # Uncomment it if you are using a notebook.
 #
-# input type:touchpad {
-#     tap enabled
-#     dwt enabled
-#     natural_scroll enabled
-#     middle_emulation enabled
-# }
+input type:touchpad {
+     tap enabled
+     dwt enabled
+     natural_scroll enabled
+     middle_emulation enabled
+}
 
 # Brazilian ABNT2 keyboard.
 # Uncomment if Sway does not automatically use the correct layout.
