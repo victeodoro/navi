@@ -47,7 +47,7 @@ set $file_manager nemo
 # output HDMI-A-1 resolution 1920x1080 position 1920,0
 #
 # Example wallpaper:
- output * bg ~/Downloads/test2.jpg fill
+ output * bg ~/Pictures/wallpaper.jpg fill
 
 # Border gaps
 default_border pixel 2
