@@ -49,11 +49,6 @@ set $file_manager nemo
 # Example wallpaper:
  output * bg ~/Pictures/wallpaper.jpg fill
 
-# Border gaps
-default_border pixel 2
-gaps inner 4px
-gaps outer 4px
-
 # -----------------------------------------------------------------------------
 # Input configuration
 # -----------------------------------------------------------------------------
@@ -319,6 +314,25 @@ bindsym Print exec ~/.config/sway/scripts/screenshot-save.sh
 # Select a region and copy the image directly to the clipboard.
 bindsym $mod+Print exec ~/.config/sway/scripts/screenshot-copy.sh
 
+# -----------------------------------------------------------------------------
+# Color configuration
+# -----------------------------------------------------------------------------
+
+# class                 border  background  text     indicator  child_border
+client.focused          #f5c542 #f5c542     #1e1e1e #f5c542    #f5c542
+client.focused_inactive #3a3a3a #3a3a3a     #d0d0d0 #3a3a3a    #3a3a3a
+client.unfocused        #2a2a2a #2a2a2a     #888888 #2a2a2a    #2a2a2a
+client.urgent           #cc241d #cc241d     #ffffff #cc241d    #cc241d
+client.placeholder      #000000 #0c0c0c     #ffffff #000000    #0c0c0c
+
+# -----------------------------------------------------------------------------
+# Border configuration
+# -----------------------------------------------------------------------------
+
+default_border pixel 2
+default_floating_border pixel 2
+gaps inner 4px
+gaps outer 4px
 
 # -----------------------------------------------------------------------------
 # Additional distribution configuration

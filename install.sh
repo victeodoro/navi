@@ -74,10 +74,10 @@ sudo apt install -y \
 
 echo "==> Installing fonts..."
 sudo apt install -y \
-    fonts-dejavu \
-    fonts-font-awesome \
-    fonts-noto \
-    fonts-noto-color-emoji
+    fonts-noto-core \
+    fonts-noto-color-emoji \
+    fonts-jetbrains-mono \
+    fonts-font-awesome
 
 echo "==> Installing user applications..."
 sudo apt install -y \
