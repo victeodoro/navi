@@ -1,6 +1,4 @@
 # Core system tools
-sudo
-git
 curl
 ca-certificates
 openssh-server

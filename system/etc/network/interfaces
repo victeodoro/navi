@@ -1,0 +1,3 @@
+# Loopback only: real interfaces are managed by NetworkManager
+auto lo
+iface lo inet loopback

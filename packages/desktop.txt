@@ -6,3 +6,23 @@ xfce4-notifyd
 lightdm
 lightdm-gtk-greeter
 dbus-x11
+
+# Audio
+pipewire
+pipewire-pulse
+wireplumber
+pavucontrol
+xfce4-pulseaudio-plugin
+rtkit
+
+# Network
+network-manager
+network-manager-gnome
+
+# Fonts
+fonts-noto
+fonts-noto-color-emoji
+fonts-jetbrains-mono
+
+# Launcher (temporary, until rofi)
+xfce4-whiskermenu-plugin

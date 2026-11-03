@@ -20,3 +20,5 @@ fi
 # System config files
 sudo install -m 644 system/etc/default/keyboard /etc/default/keyboard
 sudo setupcon || true
+
+sudo install -m 644 system/etc/network/interfaces /etc/network/interfaces
