@@ -11,10 +11,20 @@ sudo apt-get update
 
 install_list packages/base.txt
 install_list packages/desktop.txt
+install_list packages/themes.txt
 
 # VM-only packages, auto-detected
 if systemd-detect-virt -q; then
   install_list packages/vm.txt
+fi
+
+# --- Icons: Colloid, Gruvbox scheme, yellow folders (pinned release) ---
+COLLOID_ICONS_TAG="2026-08-10"
+if [ ! -d "$HOME/.local/share/icons/Colloid-Yellow-Gruvbox-Light" ]; then
+  tmp="$(mktemp -d)"
+  git clone --depth 1 --branch "$COLLOID_ICONS_TAG" https://github.com/vinceliuice/Colloid-icon-theme "$tmp"
+  (cd "$tmp" && ./install.sh -s gruvbox -t yellow)
+  rm -rf "$tmp"
 fi
 
 # System config files
