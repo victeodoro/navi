@@ -1,0 +1,8 @@
+# Minimal XFCE setup
+xorg
+xfce4
+xfce4-terminal
+xfce4-notifyd
+lightdm
+lightdm-gtk-greeter
+dbus-x11

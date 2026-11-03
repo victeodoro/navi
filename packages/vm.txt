@@ -1,0 +1,3 @@
+# Only installed when running inside a VM
+spice-vdagent
+qemu-guest-agent
