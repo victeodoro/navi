@@ -2,6 +2,11 @@
 # Navi XFCE settings. Run from INSIDE the desktop session, not over SSH.
 set -euo pipefail
 
+NAVI_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Wallpaper
+WALLPAPER="$NAVI_DIR/wallpapers/lain.png"
+
 # Appearance
 xfconf-query -c xsettings -p /Net/IconThemeName -s "<THEME_NAME>"
 xfconf-query -c xsettings -p /Net/ThemeName     -s "Gruvbox-Orange-Light"

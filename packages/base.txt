@@ -2,3 +2,5 @@
 curl
 ca-certificates
 openssh-server
+stow
+xz-utils

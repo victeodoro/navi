@@ -13,6 +13,9 @@ install_list packages/base.txt
 install_list packages/desktop.txt
 install_list packages/theme.txt
 
+# --- Dotfiles ---
+(cd dotfiles && stow -t "$HOME" --restow */)
+
 # VM-only packages, auto-detected
 if systemd-detect-virt -q; then
   install_list packages/vm.txt
@@ -36,6 +39,19 @@ if [ ! -d "$HOME/.themes/Gruvbox-Orange-Light" ]; then
   git -C "$tmp" checkout -q FETCH_HEAD
   (cd "$tmp/themes" && ./install.sh -c light -t orange)
   rm -rf "$tmp"
+fi
+
+# --- Font: JetBrains Mono Nerd Font (pinned release) ---
+# --- Font: JetBrains Mono Nerd Font (pinned release) ---
+NERD_FONTS_TAG="v3.4.0"
+FONT_DIR="$HOME/.local/share/fonts/JetBrainsMonoNerd"
+if [ ! -d "$FONT_DIR" ]; then
+  tmp="$(mktemp -d)"
+  curl -fsSL "https://github.com/ryanoasis/nerd-fonts/releases/download/$NERD_FONTS_TAG/JetBrainsMono.tar.xz" \
+    | tar -xJ -C "$tmp"
+  mkdir -p "$(dirname "$FONT_DIR")"
+  mv "$tmp" "$FONT_DIR"
+  fc-cache -f
 fi
 
 # System config files

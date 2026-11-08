@@ -27,3 +27,6 @@ fonts-jetbrains-mono
 
 # Launcher (temporary, until rofi)
 xfce4-whiskermenu-plugin
+
+# Terminall
+alacritty
