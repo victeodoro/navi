@@ -10,4 +10,6 @@ configuration {
   display-window: " windows";
 }
 
-@theme "navi"
+// Full path on purpose: a bare "navi" matches the ~/navi repo folder
+// when rofi starts from $HOME, and rofi then fails to load the theme.
+@theme "~/.config/rofi/navi.rasi"

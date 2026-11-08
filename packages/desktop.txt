@@ -37,5 +37,8 @@ gvfs                   # trash, mounts and network places in Nemo
 unzip                  # unpacks the yazi release
 chafa                  # yazi image previews inside Alacritty
 
+# Browser: Debian's Firefox ESR, security fixes come through apt
+firefox-esr
+
 # Screenshots
 xfce4-screenshooter

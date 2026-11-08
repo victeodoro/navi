@@ -9,7 +9,9 @@ xfconf-query -c xfce4-desktop -p /desktop-icons/style -n -t int -s 0   # 0 = no 
 
 # Appearance
 xfconf-query -c xsettings -p /Net/ThemeName     -s "Gruvbox-Orange-Light"
-xfconf-query -c xfwm4     -p /general/theme     -s "Gruvbox-Orange-Light"
+xfconf-query -c xfwm4     -p /general/theme     -s "Navi"   # themes/gen-xfwm4.py
+xfconf-query -c xfwm4     -p /general/title_font   -n -t string -s "JetBrainsMono Nerd Font Bold 9"
+xfconf-query -c xfwm4     -p /general/button_layout -n -t string -s "|HMC"   # minimize, maximize, close on the right
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Colloid-Orange-Gruvbox-Light"
 
 # Wallpaper (applied to every connected monitor)
@@ -86,6 +88,19 @@ k "<Super>Return"  "alacritty"
 k "<Super>r"       "rofi -show run"
 k Print            "xfce4-screenshooter -f"
 k "<Shift>Print"   "xfce4-screenshooter -r"
+# Window tiling (xfwm4 built-ins). Dragging a window to a screen edge also tiles it.
+# Note: xfconf spells Ctrl as <Primary>.
+w() { xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/$1" -n -t string -s "$2"; }
+w "<Super>Left"          tile_left_key
+w "<Super>Right"         tile_right_key
+w "<Super>Up"            maximize_window_key
+w "<Super>Down"          hide_window_key
+w "<Super><Shift>Left"   tile_up_left_key
+w "<Super><Shift>Right"  tile_up_right_key
+w "<Super><Primary>Left" tile_down_left_key
+w "<Super><Primary>Right" tile_down_right_key
+w "<Super>q"             close_window_key
+xfconf-query -c xfwm4 -p /general/tile_on_move -n -t bool -s true
 # <Super>Tab belonged to xfwm4's window switcher; free it for rofi
 xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/<Super>Tab" -r || true
 

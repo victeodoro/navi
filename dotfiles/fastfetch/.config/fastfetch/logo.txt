@@ -1,5 +1,5 @@
 $1 █▄ █ ▄▀█ █ █ █
 $1 █ ▀█ █▀█ ▀▄▀ █
 $2
-$2 present day,
-$2 present time.
+$2 it's an exciting
+$2 time in the world.
