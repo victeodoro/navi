@@ -26,6 +26,7 @@ fonts-jetbrains-mono
 
 # Launcher
 rofi
+xcape                  # tap Super alone = Super+Space (rofi), hold Super = combos still work
 
 # Terminal
 alacritty

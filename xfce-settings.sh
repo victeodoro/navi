@@ -96,7 +96,6 @@ xfconf-query -c xfwm4 -p /general/workspace_names -n \
 
 # --- Keyboard shortcuts ---
 k() { xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/$1" -n -t string -s "$2"; }
-k Super_L          "rofi -show drun"
 k "<Super>space"   "rofi -show drun"
 k "<Super>Tab"     "rofi -show window"
 k "<Super>e"       "nemo"
@@ -106,17 +105,32 @@ k Print            "xfce4-screenshooter -f"
 k "<Shift>Print"   "xfce4-screenshooter -r"
 # Window tiling (xfwm4 built-ins). Dragging a window to a screen edge also tiles it.
 # Note: xfconf spells Ctrl as <Primary>.
-w() { xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/$1" -n -t string -s "$2"; }
-w "<Super>Left"          tile_left_key
-w "<Super>Right"         tile_right_key
-w "<Super>Up"            maximize_window_key
-w "<Super>Down"          hide_window_key
-w "<Super><Shift>Left"   tile_up_left_key
-w "<Super><Shift>Right"  tile_up_right_key
-w "<Super><Primary>Left" tile_down_left_key
-w "<Super><Primary>Right" tile_down_right_key
-w "<Super>q"             close_window_key
+# xfwm4 allows ONE key per action: if two keys map to the same action, one
+# silently stops working (this broke Alt+F4 once). w() unbinds the old key first.
+w() {
+  xfconf-query -c xfce4-keyboard-shortcuts -lv \
+    | awk -v a="$2" -v k="/xfwm4/custom/$1" '$1 ~ "^/xfwm4/custom/" && $2 == a && $1 != k {print $1}' \
+    | while read -r old; do xfconf-query -c xfce4-keyboard-shortcuts -p "$old" -r; done
+  xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/$1" -n -t string -s "$2"
+}
+w "<Super>Left"            tile_left_key        # was Super+Keypad4
+w "<Super>Right"           tile_right_key
+w "<Super>Up"              maximize_window_key  # was Alt+F10
+w "<Super>Down"            hide_window_key      # was Alt+F9
+w "<Super><Shift>Left"     tile_up_left_key
+w "<Super><Shift>Right"    tile_up_right_key
+w "<Super><Primary>Left"   tile_down_left_key
+w "<Super><Primary>Right"  tile_down_right_key
+w "<Super>1"               workspace_1_key      # was Ctrl+F1, etc.
+w "<Super>2"               workspace_2_key
+w "<Super>3"               workspace_3_key
+w "<Super>4"               workspace_4_key
+# Close stays on Alt+F4 (xfwm4 default)
 xfconf-query -c xfwm4 -p /general/tile_on_move -n -t bool -s true
+# Never bind bare Super_L: it grabs the key and swallows every Super+<key>
+# combo (tiling broke because of it). xcape (autostarted) turns a Super tap
+# into Super+Space instead.
+xfconf-query -c xfce4-keyboard-shortcuts -p /commands/custom/Super_L -r 2>/dev/null || true
 # <Super>Tab belonged to xfwm4's window switcher; free it for rofi
 xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/<Super>Tab" -r || true
 

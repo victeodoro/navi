@@ -17,7 +17,9 @@
 - Changing the login shell (chsh) only applies after logging out and back in: the running session keeps SHELL=/bin/bash.
 - Panel styling is GTK CSS in ~/.config/gtk-3.0/gtk.css, scoped with `.xfce4-panel` and plugin names like `#pager-1`. The clock plugin ignores CSS fonts: it has its own digital-time-font setting.
 - ~/.config/gtk-3.0 must be a real folder before stow runs, or GTK apps write bookmarks into the repo.
-- OPEN ISSUE: on the VM, xfwm4 workspace shortcuts work but every per-window shortcut (Alt+F4, Alt+F10, Super+arrows) is ignored, and the keys fall through to the app. Ruled out: the Navi theme, a fresh xfwm4, the br/thinkpad layout, the Super_L rofi binding, the shortcut config itself.
+- xfwm4 allows ONE key per window action. Binding Super+Up to maximize while Alt+F10 still had it silently killed one of them; this broke Alt+F4/Alt+F10. xfce-settings.sh unbinds the old key first. Changes need an xfwm4 restart (or re-login) to fully apply.
+- Never bind bare Super_L as a shortcut: it grabs Super and swallows every Super+<key> combo. xcape maps a Super tap to Super+Space instead.
+- Debugging shortcuts: when xfwm4 doesn't match a window shortcut it replays the key to the app, so you see junk like `;3~` typed in the terminal.
 
 ## Credits
 - Wallpaper `wallpapers/lain.png`: by patrika (https://alphacoders.com/users/profile/227699/patrika). Redistributed with attribution, as permitted by the author. Download link: https://wall.alphacoders.com/big.php?i=1371077

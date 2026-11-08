@@ -20,7 +20,7 @@
 ## Shortcuts
 | Keys | Action |
 |---|---|
-| Super / Super+Space | App launcher (rofi) |
+| Super (tap) / Super+Space | App launcher (rofi) |
 | Super+Tab | Window switcher (rofi) |
 | Super+R | Run a command (rofi) |
 | Super+Return | Terminal (Alacritty) |
@@ -28,5 +28,6 @@
 | Super+←/→ | Tile window to left/right half |
 | Super+Shift+←/→ · Super+Ctrl+←/→ | Tile to top / bottom corners |
 | Super+↑ / Super+↓ | Maximize toggle / minimize |
-| Super+Q | Close window |
+| Alt+F4 | Close window |
+| Super+1…4 | Go to workspace 1…4 |
 | Print / Shift+Print | Screenshot full screen / region |

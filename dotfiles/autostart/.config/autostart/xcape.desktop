@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=xcape (Super tap opens launcher)
+Comment=Tap Super alone to send Super+Space; holding Super keeps combos working
+Exec=xcape -e 'Super_L=Super_L|space'
+X-GNOME-Autostart-enabled=true

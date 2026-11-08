@@ -17,7 +17,7 @@ install_list packages/shell.txt
 # --- Dotfiles ---
 # Apps write their own files (e.g. GTK bookmarks) into these folders, so they
 # must be real directories; otherwise stow links the whole folder into the repo.
-mkdir -p "$HOME/.config/gtk-3.0"
+mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/autostart"
 (cd dotfiles && stow -t "$HOME" --restow */)
 
 # VM-only packages, auto-detected
