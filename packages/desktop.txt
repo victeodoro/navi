@@ -25,8 +25,18 @@ fonts-noto
 fonts-noto-color-emoji
 fonts-jetbrains-mono
 
-# Launcher (temporary, until rofi)
-xfce4-whiskermenu-plugin
+# Launcher
+rofi
 
-# Terminall
+# Terminal
 alacritty
+
+# File managers: Nemo (GUI) + yazi (TUI, installed by bootstrap.sh)
+nemo
+libglib2.0-bin         # gsettings CLI, used to configure Nemo
+gvfs                   # trash, mounts and network places in Nemo
+unzip                  # unpacks the yazi release
+chafa                  # yazi image previews inside Alacritty
+
+# Screenshots
+xfce4-screenshooter

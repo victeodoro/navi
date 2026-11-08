@@ -1,0 +1,41 @@
+// Navi: warm Gruvbox, dark box with an orange accent
+* {
+  bg:      #1d2021f2;
+  bg-alt:  #282828;
+  fg:      #ebdbb2;
+  fg-dim:  #a89984;
+  accent:  #fe8019;
+  accent2: #d65d0e;
+
+  background-color: transparent;
+  text-color:       @fg;
+}
+
+window {
+  width:            560px;
+  background-color: @bg;
+  border:           2px;
+  border-color:     @accent2;
+  border-radius:    10px;
+  padding:          16px;
+}
+
+mainbox  { spacing: 12px; children: [ inputbar, listview ]; }
+
+inputbar {
+  background-color: @bg-alt;
+  border-radius:    6px;
+  padding:          8px 12px;
+  spacing:          10px;
+  children:         [ prompt, entry ];
+}
+prompt   { text-color: @accent; }
+entry    { placeholder: "search..."; placeholder-color: @fg-dim; }
+
+listview { lines: 8; columns: 1; spacing: 4px; scrollbar: false; fixed-height: true; }
+
+element          { padding: 6px 10px; spacing: 10px; border-radius: 6px; }
+element-icon     { size: 22px; }
+element-text     { vertical-align: 0.5; }
+element selected { background-color: @accent2; }
+element selected element-text { text-color: #1d2021; }

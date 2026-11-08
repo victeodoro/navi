@@ -10,3 +10,16 @@
 - Desktop: XFCE, minimal core with no goodies. Chose it over Cinnamon/Sway for being light and modular.
 - Keyboard: pt-BR ABNT2, set in system/etc/default/keyboard
 - VM: KVM with SPICE; guest tools in packages/vm.txt
+- Layout: no desktop icons, no dock, one slim top bar (workspaces, windows, clock, tray, power).
+- Launcher: rofi with a custom warm Gruvbox theme (dotfiles/rofi). Super opens it.
+- File managers: Nemo (GUI, from Linux Mint, follows the GTK theme) + yazi (terminal, pinned GitHub release).
+
+## Shortcuts
+| Keys | Action |
+|---|---|
+| Super / Super+Space | App launcher (rofi) |
+| Super+Tab | Window switcher (rofi) |
+| Super+R | Run a command (rofi) |
+| Super+Return | Terminal (Alacritty) |
+| Super+E | File manager (Nemo) |
+| Print / Shift+Print | Screenshot full screen / region |

@@ -53,6 +53,17 @@ if [ ! -d "$FONT_DIR" ]; then
   fc-cache -f
 fi
 
+# --- yazi: terminal file manager, not packaged in Debian (pinned release) ---
+YAZI_TAG="v26.9.1"
+if ! command -v yazi >/dev/null || ! yazi --version | grep -q "${YAZI_TAG#v}"; then
+  tmp="$(mktemp -d)"
+  curl -fsSL -o "$tmp/yazi.zip" \
+    "https://github.com/sxyazi/yazi/releases/download/$YAZI_TAG/yazi-x86_64-unknown-linux-gnu.zip"
+  unzip -q "$tmp/yazi.zip" -d "$tmp"
+  sudo install -m 755 "$tmp"/yazi-x86_64-unknown-linux-gnu/{yazi,ya} /usr/local/bin/
+  rm -rf "$tmp"
+fi
+
 # System config files
 sudo install -m 644 system/etc/default/keyboard /etc/default/keyboard
 sudo setupcon || true
