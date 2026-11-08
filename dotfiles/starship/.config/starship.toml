@@ -1,0 +1,66 @@
+# Navi: starship prompt, warm Gruvbox
+#
+#  ╭─  navi ~/projects/navi  main ●         18:42
+#  ╰─❯
+
+add_newline = true
+format = """
+[╭─](fg:#504945)\
+[  ](bg:#d65d0e fg:#1d2021)$username$hostname\
+[](fg:#d65d0e bg:#d79921)$directory\
+[](fg:#d79921 bg:#3c3836)$git_branch$git_status\
+[](fg:#3c3836)\
+$fill$cmd_duration$python$time
+[╰─](fg:#504945)$character"""
+
+[username]
+show_always = true
+style_user = "bg:#d65d0e fg:#1d2021 bold"
+style_root = "bg:#cc241d fg:#fbf1c7 bold"
+format = "[$user]($style)"
+
+[hostname]
+ssh_only = true
+style = "bg:#d65d0e fg:#1d2021"
+format = "[@$hostname]($style)"
+
+[directory]
+style = "bg:#d79921 fg:#1d2021"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+home_symbol = "~"
+
+[git_branch]
+symbol = ""
+style = "bg:#3c3836 fg:#fe8019"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style = "bg:#3c3836 fg:#fabd2f"
+format = "[$all_status$ahead_behind ]($style)"
+
+[fill]
+symbol = " "
+
+[cmd_duration]
+min_time = 2000
+style = "fg:#a89984"
+format = "[ $duration ]($style)"
+
+[python]
+symbol = " "
+style = "fg:#fabd2f"
+format = "[$symbol$virtualenv ]($style)"
+detect_extensions = []
+detect_files = []
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "fg:#7c6f64"
+format = "[ $time]($style)"
+
+[character]
+success_symbol = "[❯](bold fg:#fe8019)"
+error_symbol = "[❯](bold fg:#fb4934)"

@@ -12,6 +12,7 @@ sudo apt-get update
 install_list packages/base.txt
 install_list packages/desktop.txt
 install_list packages/theme.txt
+install_list packages/shell.txt
 
 # --- Dotfiles ---
 (cd dotfiles && stow -t "$HOME" --restow */)
@@ -62,6 +63,11 @@ if ! command -v yazi >/dev/null || ! yazi --version | grep -q "${YAZI_TAG#v}"; t
   unzip -q "$tmp/yazi.zip" -d "$tmp"
   sudo install -m 755 "$tmp"/yazi-x86_64-unknown-linux-gnu/{yazi,ya} /usr/local/bin/
   rm -rf "$tmp"
+fi
+
+# --- Login shell: zsh ---
+if [ "$(getent passwd "$USER" | cut -d: -f7)" != "/usr/bin/zsh" ]; then
+  sudo chsh -s /usr/bin/zsh "$USER"
 fi
 
 # System config files

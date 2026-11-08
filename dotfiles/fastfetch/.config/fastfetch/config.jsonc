@@ -1,0 +1,25 @@
+// Navi: fastfetch banner
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "file",
+    "source": "~/.config/fastfetch/logo.txt",
+    "color": { "1": "38;2;254;128;25", "2": "38;2;124;111;100" },
+    "padding": { "top": 1, "right": 4 }
+  },
+  "display": {
+    "separator": "  ",
+    "color": { "keys": "38;2;214;93;14" },
+    "key": { "width": 8 }
+  },
+  "modules": [
+    { "type": "os",       "key": "os" },
+    { "type": "kernel",   "key": "kernel" },
+    { "type": "wm",       "key": "wm" },
+    { "type": "shell",    "key": "shell" },
+    { "type": "terminal", "key": "term" },
+    { "type": "uptime",   "key": "uptime" },
+    { "type": "memory",   "key": "memory" },
+    { "type": "colors",   "symbol": "circle", "paddingLeft": 0 }
+  ]
+}

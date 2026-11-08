@@ -8,6 +8,9 @@
 - `gsettings` (used to configure Nemo and other GNOME-family apps) lives in libglib2.0-bin, which --no-install-recommends leaves out.
 - The XFCE panel is rebuilt from scratch by xfce-settings.sh (channel reset + recreate). Editing it through the GUI works, but the next script run wipes those changes: put them in the script.
 - Panel "actions" plugin: button-title 3 means a custom label, not icon only. A Nerd Font glyph as the label gives an icon look.
+- Alacritty opacity under xfwm4 looks far stronger than the number: 0.95 already shows windows behind clearly. 0.98 reads as subtle glass.
+- Nerd Font icons are Unicode private-use characters. Some editors and copy-paste paths silently drop them; if a prompt shows blanks, check the file with `grep -P '[\x{e000}-\x{f8ff}]'`.
+- Dotfile folders keep their files under a hidden `.config/` (e.g. dotfiles/rofi/.config/rofi/). Use `ls -a` to see it. Stow mirrors that path into $HOME.
 
 ## Credits
 - Wallpaper `wallpapers/lain.png`: by patrika (https://alphacoders.com/users/profile/227699/patrika). Redistributed with attribution, as permitted by the author. Download link: https://wall.alphacoders.com/big.php?i=1371077

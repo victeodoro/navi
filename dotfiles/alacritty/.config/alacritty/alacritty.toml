@@ -6,11 +6,15 @@
 TERM = "xterm-256color"
 
 [window]
-padding = { x = 12, y = 10 }
+padding = { x = 16, y = 14 }
 dynamic_padding = true
+opacity = 0.98          # xfwm4 makes this look much stronger than it sounds; 0.95 was too see-through
+decorations = "Full"
 
 [font]
 size = 11.0
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 
 [cursor]
@@ -18,8 +22,16 @@ style = { shape = "Beam", blinking = "On" }
 
 # Gruvbox dark
 [colors.primary]
-background = "#282828"
+background = "#1d2021"   # Gruvbox hard: a touch deeper than #282828
 foreground = "#ebdbb2"
+
+[colors.cursor]
+cursor = "#fe8019"
+text   = "#1d2021"
+
+[colors.selection]
+background = "#d65d0e"
+text       = "#1d2021"
 
 [colors.normal]
 black   = "#282828"

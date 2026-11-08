@@ -12,6 +12,7 @@
 - VM: KVM with SPICE; guest tools in packages/vm.txt
 - Layout: no desktop icons, no dock, one slim top bar (workspaces, windows, clock, tray, power).
 - Launcher: rofi with a custom warm Gruvbox theme (dotfiles/rofi). Super opens it.
+- Shell: zsh (Kali's default too) with autosuggestions + syntax highlighting, starship prompt, fastfetch banner. Terminal: Alacritty only (xfce4-terminal removed).
 - File managers: Nemo (GUI, from Linux Mint, follows the GTK theme) + yazi (terminal, pinned GitHub release).
 
 ## Shortcuts

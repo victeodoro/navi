@@ -1,0 +1,6 @@
+# Shell and terminal look
+zsh
+zsh-autosuggestions        # grey "ghost" suggestion from history, accept with →
+zsh-syntax-highlighting    # colors commands green/red as you type (valid/typo)
+starship                   # the prompt line (dir, git branch, etc.)
+fastfetch                  # system info banner shown when a terminal opens
