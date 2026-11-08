@@ -1,0 +1,57 @@
+/* Navi: user GTK3 overrides.
+ * Everything here is scoped to the XFCE panel, so apps keep the Gruvbox theme.
+ * Panel plugins are named <plugin>-<id> (ids set in xfce-settings.sh).
+ * Debug live with: GTK_DEBUG=interactive xfce4-panel -r
+ */
+
+.xfce4-panel {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 9pt;
+}
+
+.xfce4-panel button {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  text-shadow: none;
+  -gtk-icon-shadow: none;
+}
+
+/* Menu button */
+#launcher-10 button { padding: 0 8px; }
+#launcher-10 button:hover { background: rgba(214, 93, 14, 0.25); }
+
+/* Workspaces: current one is a solid orange block */
+#pager-1 button,
+#pager-1 radiobutton { padding: 0 9px; color: #7c6f64; }
+#pager-1 button:hover,
+#pager-1 radiobutton:hover { color: #fe8019; }
+#pager-1 button:checked,
+#pager-1 radiobutton:checked {
+  color: #1d2021;
+  background: #d65d0e;
+  font-weight: bold;
+}
+
+/* Window list: focused window gets an orange underline */
+#tasklist-2 button {
+  padding: 0 10px;
+  color: #a89984;
+  border-bottom: 2px solid transparent;
+}
+#tasklist-2 button:hover { color: #ebdbb2; background: rgba(235, 219, 178, 0.06); }
+#tasklist-2 button:checked {
+  color: #ebdbb2;
+  background: rgba(214, 93, 14, 0.15);
+  border-bottom: 2px solid #fe8019;
+}
+
+/* Clock */
+#clock-4 label { color: #fe8019; font-weight: bold; }
+#clock-4 button:hover { background: rgba(214, 93, 14, 0.25); }
+
+/* Right side */
+#pulseaudio-7 button:hover,
+#actions-9 button:hover { background: rgba(214, 93, 14, 0.25); }
+#actions-9 label { color: #fe8019; }
