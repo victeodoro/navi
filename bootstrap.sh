@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Navi bootstrap: run as root user
+# Navi bootstrap: run as your normal user (uses sudo where needed)
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -41,7 +41,6 @@ if [ ! -d "$HOME/.themes/Gruvbox-Orange-Light" ]; then
   rm -rf "$tmp"
 fi
 
-# --- Font: JetBrains Mono Nerd Font (pinned release) ---
 # --- Font: JetBrains Mono Nerd Font (pinned release) ---
 NERD_FONTS_TAG="v3.4.0"
 FONT_DIR="$HOME/.local/share/fonts/JetBrainsMonoNerd"
