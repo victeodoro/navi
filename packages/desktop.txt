@@ -6,6 +6,7 @@ xfce4-notifyd
 lightdm
 lightdm-gtk-greeter
 dbus-x11
+at-spi2-core
 
 # Audio
 pipewire

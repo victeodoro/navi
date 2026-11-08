@@ -1,3 +1,0 @@
-# Theme
-gtk-update-icon-cache
-librsvg2-common

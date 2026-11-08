@@ -1,0 +1,6 @@
+# Theme
+gtk-update-icon-cache
+librsvg2-common
+sassc                  # GTK theme build dependency
+gtk2-engines-murrine   # GTK2 rendering engine
+gnome-themes-extra     # base theme assets
