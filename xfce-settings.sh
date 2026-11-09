@@ -13,6 +13,8 @@ xfconf-query -c xfwm4     -p /general/theme     -s "Gruvbox-Orange-Light"
 xfconf-query -c xfwm4     -p /general/title_font   -n -t string -s "JetBrainsMono Nerd Font Bold 9"
 xfconf-query -c xfwm4     -p /general/button_layout -n -t string -s "|HMC"   # minimize, maximize, close on the right
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Colloid-Orange-Gruvbox-Light"
+# Interface scale: 96 is 100%. Any value works, so this allows in-between sizes.
+xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 84
 
 # Wallpaper (applied to every connected monitor)
 WALLPAPER="$NAVI_DIR/wallpapers/lain.png"
@@ -155,5 +157,3 @@ xdg-mime default nemo.desktop inode/directory
 # Nemo: no desktop drawing, open terminals in Alacritty
 gsettings set org.nemo.desktop show-desktop-icons false
 gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty
-# Starting size only: Nemo remembers whatever size you close it at
-gsettings set org.nemo.window-state geometry "640x420"
