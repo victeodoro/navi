@@ -12,6 +12,7 @@ xfconf-query -c xsettings -p /Net/ThemeName     -s "Gruvbox-Orange-Light"
 xfconf-query -c xfwm4     -p /general/theme     -s "Gruvbox-Orange-Light"
 xfconf-query -c xfwm4     -p /general/title_font   -n -t string -s "JetBrainsMono Nerd Font Bold 9"
 xfconf-query -c xfwm4     -p /general/button_layout -n -t string -s "|HMC"   # minimize, maximize, close on the right
+xfconf-query -c xfwm4     -p /general/title_alignment -n -t string -s "left"   # centered titles sit off-center: xfwm4 ignores the space the buttons take
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Colloid-Orange-Gruvbox-Light"
 # Interface scale: 96 is 100%. Any value works, so this allows in-between sizes.
 xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 84
