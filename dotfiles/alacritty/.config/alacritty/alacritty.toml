@@ -6,6 +6,7 @@
 TERM = "xterm-256color"
 
 [window]
+dimensions = { columns = 70, lines = 18 }
 padding = { x = 16, y = 14 }
 dynamic_padding = true
 opacity = 0.98          # xfwm4 makes this look much stronger than it sounds; 0.95 was too see-through

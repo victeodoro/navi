@@ -113,9 +113,6 @@ k "<Super>r"       "rofi -show run"
 k Print          "xfce4-screenshooter -f"      # full screen
 k "<Shift>Print" "xfce4-screenshooter -r"      # region
 k "<Alt>Print"   "xfce4-screenshooter -w"      # active window
-for key in "<Primary>Print" "<Primary><Shift>Print" "<Primary><Alt>Print"; do
-  xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/$key" -r 2>/dev/null || true
-done
 rc="$HOME/.config/xfce4/xfce4-screenshooter"   # the app rewrites this file, so it isn't a dotfile
 touch "$rc"
 if grep -q '^action=' "$rc"; then sed -i 's/^action=.*/action=2/' "$rc"; else echo 'action=2' >> "$rc"; fi   # 2 = clipboard
@@ -130,10 +127,7 @@ w() {
     | while read -r old; do xfconf-query -c xfce4-keyboard-shortcuts -p "$old" -r; done
   xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/$1" -n -t string -s "$2"
 }
-# Tiling: xfwm4's own. The old navi-tile script bound these as commands; drop those.
-for key in Left Right Up Down; do
-  xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/<Super>$key" -r 2>/dev/null || true
-done
+# Tiling: xfwm4's own
 w "<Super>Left"            tile_left_key
 w "<Super>Right"           tile_right_key
 w "<Super>Up"              tile_up_key
@@ -153,7 +147,6 @@ xfconf-query -c xfwm4 -p /general/tile_on_move -n -t bool -s true
 # Never bind bare Super_L: it grabs the key and swallows every Super+<key>
 # combo (tiling broke because of it). xcape (autostarted) turns a Super tap
 # into Super+Space instead.
-xfconf-query -c xfce4-keyboard-shortcuts -p /commands/custom/Super_L -r 2>/dev/null || true
 # <Super>Tab belonged to xfwm4's window switcher; free it for rofi
 xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/<Super>Tab" -r || true
 
@@ -162,3 +155,5 @@ xdg-mime default nemo.desktop inode/directory
 # Nemo: no desktop drawing, open terminals in Alacritty
 gsettings set org.nemo.desktop show-desktop-icons false
 gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty
+# Starting size only: Nemo remembers whatever size you close it at
+gsettings set org.nemo.window-state geometry "640x420"

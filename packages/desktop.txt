@@ -38,9 +38,6 @@ gvfs                   # trash, mounts and network places in Nemo
 unzip                  # unpacks the yazi release
 chafa                  # yazi image previews inside Alacritty
 
-# X11 inspection tools: xev (see which keys arrive), xprop (window properties)
-x11-utils
-
 # Browser: Debian's Firefox ESR, security fixes come through apt
 firefox-esr
 
