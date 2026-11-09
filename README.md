@@ -32,6 +32,5 @@
 | Super+Shift+←/→ · Super+Ctrl+←/→ | Tile to top / bottom corners |
 | Super+1…4 | Go to workspace 1…4 |
 | Alt+F4 / Alt+F10 / Alt+F9 | Close / maximize / minimize |
-| Print · Shift+Print · Alt+Print | Screenshot screen · region · window, with save dialog |
-| add Ctrl to any of the above | Same, straight to the clipboard |
+| Print · Shift+Print · Alt+Print | Screenshot screen · region · window; the dialog defaults to clipboard, press Enter |
 | Ctrl+Alt+Delete | Power menu |

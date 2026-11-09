@@ -24,7 +24,7 @@
 - XFCE panels can't center a plugin inside a full-width panel (expanding separators shift with the window list). Navi uses three non-overlapping panels (44/12/44%). Don't overlay panels: clicking the lower one raises it over the other.
 - A custom tiling script (wmctrl) misplaced Firefox and was removed: apps that draw their own title bar report frames differently. xfwm4's built-in tiling handles them.
 - Panel hover styles look like rendering bugs in screenshots when the mouse is parked on the bar. Move the pointer away before judging.
-- Screenshots to clipboard: xfce4-screenshooter -c keeps running to serve the clipboard; clipman (clipboard manager) keeps the image after it exits.
+- Screenshots: the dialog's default action lives in ~/.config/xfce4/xfce4-screenshooter (action=2 is clipboard). Ctrl+C doesn't work in that dialog; Enter confirms. Clipman keeps the image after the tool exits.
 
 ## Credits
 - Wallpaper `wallpapers/lain.png`: by patrika (https://alphacoders.com/users/profile/227699/patrika). Redistributed with attribution, as permitted by the author. Download link: https://wall.alphacoders.com/big.php?i=1371077

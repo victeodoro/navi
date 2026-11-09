@@ -108,13 +108,17 @@ k "<Super>Tab"     "rofi -show window"
 k "<Super>e"       "nemo"
 k "<Super>Return"  "alacritty"
 k "<Super>r"       "rofi -show run"
-# Screenshots, Cinnamon style: add Ctrl to copy straight to the clipboard
-k Print                    "xfce4-screenshooter -f"      # full screen  -> dialog
-k "<Shift>Print"           "xfce4-screenshooter -r"      # region       -> dialog
-k "<Alt>Print"             "xfce4-screenshooter -w"      # window       -> dialog
-k "<Primary>Print"         "xfce4-screenshooter -f -c"   # full screen  -> clipboard
-k "<Primary><Shift>Print"  "xfce4-screenshooter -r -c"   # region       -> clipboard
-k "<Primary><Alt>Print"    "xfce4-screenshooter -w -c"   # window       -> clipboard
+# Screenshots: every key opens the dialog, which defaults to "copy to clipboard"
+# (press Enter to confirm).
+k Print          "xfce4-screenshooter -f"      # full screen
+k "<Shift>Print" "xfce4-screenshooter -r"      # region
+k "<Alt>Print"   "xfce4-screenshooter -w"      # active window
+for key in "<Primary>Print" "<Primary><Shift>Print" "<Primary><Alt>Print"; do
+  xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/$key" -r 2>/dev/null || true
+done
+rc="$HOME/.config/xfce4/xfce4-screenshooter"   # the app rewrites this file, so it isn't a dotfile
+touch "$rc"
+if grep -q '^action=' "$rc"; then sed -i 's/^action=.*/action=2/' "$rc"; else echo 'action=2' >> "$rc"; fi   # 2 = clipboard
 # Power menu
 k "<Primary><Alt>Delete"   "$HOME/.local/bin/navi-power"
 # xfwm4 window actions. xfconf spells Ctrl as <Primary>.
