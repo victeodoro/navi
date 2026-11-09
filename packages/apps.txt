@@ -1,0 +1,29 @@
+# Hardware panels
+bluez
+blueman                       # Bluetooth: tray icon and pairing window
+xfce4-power-manager           # battery, brightness, lid and sleep settings
+xfce4-power-manager-plugins   # battery icon for the panel
+
+# Viewers and editor
+micro                         # terminal editor with normal shortcuts (Ctrl+S/C/V)
+xclip                         # lets micro and the terminal use the system clipboard
+ristretto                     # pictures
+tumbler                       # thumbnails for Ristretto
+zathura                       # PDFs
+zathura-pdf-poppler           # zathura's PDF backend
+
+# Terminal utilities
+btop                          # system monitor
+bat                           # cat with colors (Debian names the binary batcat)
+fzf                           # fuzzy search: Ctrl+R searches shell history
+ripgrep                       # rg: search inside files
+fd-find                       # find files by name (Debian names the binary fdfind)
+
+# yazi previews and archives
+poppler-utils
+ffmpegthumbnailer
+7zip
+jq
+
+# App sandbox, used for Spotify
+flatpak

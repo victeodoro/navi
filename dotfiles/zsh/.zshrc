@@ -26,6 +26,14 @@ alias la='ls -lhA'
 alias grep='grep --color=auto'
 alias ..='cd ..'
 
+# --- Tools ---
+export EDITOR=micro VISUAL=micro
+export BAT_THEME=gruvbox-dark
+alias bat='batcat'
+alias fd='fdfind'
+export FZF_DEFAULT_OPTS='--color=bg+:#3c3836,fg+:#ebdbb2,hl:#fe8019,hl+:#fe8019,prompt:#fe8019,pointer:#fe8019,info:#a89984'
+source <(fzf --zsh)                          # Ctrl+R history, Ctrl+T files
+
 # --- Plugins (Debian packages) ---
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#7c6f64'

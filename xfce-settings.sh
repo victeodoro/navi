@@ -67,7 +67,7 @@ bar 2 9  12.2                  # a hair wide: rounding left a 1px gap that showe
 bar 3 2  44
 p /panels/panel-1/plugin-ids -t int -s 10 -t int -s 1 -t int -s 2
 p /panels/panel-2/plugin-ids -t int -s 3 -t int -s 4 -t int -s 5
-p /panels/panel-3/plugin-ids -t int -s 11 -t int -s 6 -t int -s 7 -t int -s 8 -t int -s 9
+p /panels/panel-3/plugin-ids -t int -s 11 -t int -s 6 -t int -s 12 -t int -s 7 -t int -s 8 -t int -s 9
 
 launcher 10 navi-menu "rofi -show drun" "$NAVI_DIR/icons/navi-menu.svg"
 p /plugins/plugin-1 -t string -s pager
@@ -91,6 +91,7 @@ p /plugins/plugin-4/digital-time-format -t string -s "%a %d %b  %H:%M"
 p /plugins/plugin-4/digital-time-font   -t string -s "JetBrainsMono Nerd Font Bold 9"   # clock ignores the panel CSS font
 p /plugins/plugin-6 -t string -s systray
 p /plugins/plugin-6/square-icons -t bool -s true
+p /plugins/plugin-12 -t string -s power-manager-plugin
 p /plugins/plugin-7 -t string -s pulseaudio
 p /plugins/plugin-7/enable-keyboard-shortcuts -t bool -s true
 p /plugins/plugin-8 -t string -s separator
@@ -155,6 +156,9 @@ xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/<Super>Tab" -r || tru
 
 # --- Default apps ---
 xdg-mime default nemo.desktop inode/directory
+xdg-mime default org.pwmt.zathura.desktop application/pdf
+xdg-mime default org.xfce.ristretto.desktop image/png image/jpeg image/gif image/webp image/bmp image/svg+xml image/tiff
+xdg-mime default micro.desktop text/plain
 # Nemo: no desktop drawing, open terminals in Alacritty
 gsettings set org.nemo.desktop show-desktop-icons false
 gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty

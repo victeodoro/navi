@@ -19,6 +19,7 @@
 - Launcher: rofi with a custom warm Gruvbox theme (dotfiles/rofi). Super opens it.
 - Shell: zsh (Kali's default too) with autosuggestions + syntax highlighting, starship prompt, fastfetch banner. Terminal: Alacritty only (xfce4-terminal removed).
 - File managers: Nemo (GUI, from Linux Mint, follows the GTK theme) + yazi (terminal, pinned GitHub release).
+- Apps: Blueman (Bluetooth), XFCE Power Manager (battery), micro (editor), Ristretto (pictures), zathura (PDF), btop/bat/fzf/ripgrep/fd (terminal), Spotify (Flatpak). See packages/apps.txt.
 
 ## Shortcuts
 | Keys | Action |

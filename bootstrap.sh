@@ -13,11 +13,12 @@ install_list packages/base.txt
 install_list packages/desktop.txt
 install_list packages/theme.txt
 install_list packages/shell.txt
+install_list packages/apps.txt
 
 # --- Dotfiles ---
 # Apps write their own files (e.g. GTK bookmarks) into these folders, so they
 # must be real directories; otherwise stow links the whole folder into the repo.
-mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/autostart" "$HOME/.local/bin"
+mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/autostart" "$HOME/.local/bin" "$HOME/.config/micro"
 (cd dotfiles && stow -t "$HOME" --restow */)
 
 # VM-only packages, auto-detected
@@ -59,13 +60,23 @@ fi
 
 # --- yazi: terminal file manager, not packaged in Debian (pinned release) ---
 YAZI_TAG="v26.9.1"
-if ! command -v yazi >/dev/null || ! yazi --version | grep -q "${YAZI_TAG#v}"; then
+if ! command -v yazi >/dev/null || [[ "$(yazi --version)" != *"${YAZI_TAG#v}"* ]]; then
   tmp="$(mktemp -d)"
   curl -fsSL -o "$tmp/yazi.zip" \
     "https://github.com/sxyazi/yazi/releases/download/$YAZI_TAG/yazi-x86_64-unknown-linux-gnu.zip"
   unzip -q "$tmp/yazi.zip" -d "$tmp"
   sudo install -m 755 "$tmp"/yazi-x86_64-unknown-linux-gnu/{yazi,ya} /usr/local/bin/
   rm -rf "$tmp"
+fi
+
+# --- Spotify: Flatpak, per-user so it needs no sudo ---
+flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak --user install -y --noninteractive flathub com.spotify.Client
+
+# --- btop theme: btop rewrites its config, so only seed it once ---
+if [ ! -f "$HOME/.config/btop/btop.conf" ]; then
+  mkdir -p "$HOME/.config/btop"
+  echo 'color_theme = "gruvbox_dark"' > "$HOME/.config/btop/btop.conf"
 fi
 
 # --- Login shell: zsh ---

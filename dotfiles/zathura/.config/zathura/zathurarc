@@ -1,0 +1,15 @@
+# Navi: zathura, Gruvbox. Press Ctrl+R to toggle dark pages.
+set selection-clipboard clipboard
+set font "JetBrainsMono Nerd Font 10"
+set default-bg "#1d2021"
+set default-fg "#ebdbb2"
+set statusbar-bg "#282828"
+set statusbar-fg "#ebdbb2"
+set inputbar-bg "#282828"
+set inputbar-fg "#ebdbb2"
+set notification-bg "#282828"
+set notification-fg "#ebdbb2"
+set highlight-color "#d79921"
+set highlight-active-color "#fe8019"
+set recolor-lightcolor "#1d2021"
+set recolor-darkcolor "#ebdbb2"
