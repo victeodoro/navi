@@ -20,22 +20,22 @@ OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
 TITLE_H = 30   # title bar height
 BORDER  = 2    # frame thickness
 RADIUS  = 9    # top corner radius
-BTN_W   = 24   # button cell width
-DOT_R   = 6    # button dot radius
+BTN_W   = 28   # button cell width
+PAD_R   = 10   # radius of the round pad behind each button
 
 STATES = {
     #           title bg   frame      text
     "active":   ("#282828", "#d65d0e", "#ebdbb2"),
     "inactive": ("#1d2021", "#3c3836", "#7c6f64"),
 }
-# Buttons: classic glyphs (minimize, maximize, close) in the palette
-GLYPH        = "#a89984"   # normal, focused window
-GLYPH_HOVER  = "#fe8019"   # minimize / maximize on hover
-CLOSE_HOVER  = "#fb4934"   # close on hover
-GLYPH_INACTIVE = "#665c54"
-HOVER_BG     = "#3c3836"   # soft round pad behind a hovered button
-GLYPH_SIZE   = 9           # px, square box the glyph fits in
-STROKE       = 1.5
+# Buttons: a small glyph on a round pad, the same design as the Gruvbox GTK
+# theme's buttons, in the dark palette. (pad, glyph) per state.
+BTN_ACTIVE   = ("#3c3836", "#ebdbb2")
+BTN_HOVER    = ("#d65d0e", "#1d2021")
+BTN_CLOSE_HOVER = ("#fb4934", "#1d2021")
+BTN_INACTIVE = ("#282828", "#665c54")
+GLYPH_SIZE   = 8           # px, square box the glyph fits in
+STROKE       = 1.4
 
 
 def rgb(h):  return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
@@ -104,7 +104,7 @@ def seg_dist(px, py, x1, y1, x2, y2):
 def glyph_segments(name, cx, cy):
     g = GLYPH_SIZE / 2
     if name == "hide":
-        return [(cx - g, cy + g - 1, cx + g, cy + g - 1)]
+        return [(cx - g, cy, cx + g, cy)]
     if name == "maximize":
         x0, y0, x1, y1 = cx - g, cy - g, cx + g, cy + g
         return [(x0, y0, x1, y0), (x1, y0, x1, y1), (x1, y1, x0, y1), (x0, y1, x0, y0)]
@@ -129,7 +129,7 @@ def button(bg, fr, name, color, pad=None):
             px, py = x + 0.5, y + 0.5
             c = bg
             if pad:
-                cover = max(0.0, min(1.0, 10.5 - math.hypot(px - cx, py - cy)))
+                cover = max(0.0, min(1.0, PAD_R + 0.5 - math.hypot(px - cx, py - cy)))
                 c = mix(c, pad, cover)
             d = min(seg_dist(px, py, *sg) for sg in segs)
             cover = max(0.0, min(1.0, STROKE / 2 + 0.5 - d))
@@ -153,15 +153,15 @@ def main():
 
         for name in ("hide", "maximize", "maximize-toggled", "close"):
             if state == "active":
-                hover = CLOSE_HOVER if name == "close" else GLYPH_HOVER
+                hover = BTN_CLOSE_HOVER if name == "close" else BTN_HOVER
                 variants = {
-                    "active":   (GLYPH, None),
-                    "prelight": (hover, HOVER_BG),
-                    "pressed":  (shade(hover, -0.2), HOVER_BG),
+                    "active":   BTN_ACTIVE,
+                    "prelight": hover,
+                    "pressed":  (shade(hover[0], -0.2), hover[1]),
                 }
             else:
-                variants = {"inactive": (GLYPH_INACTIVE, None)}
-            for v, (color, pad) in variants.items():
+                variants = {"inactive": BTN_INACTIVE}
+            for v, (pad, color) in variants.items():
                 write_xpm(f"{name}-{v}", button(bg, fr, name, color, pad))
 
     with open(os.path.join(OUT, "themerc"), "w") as f:

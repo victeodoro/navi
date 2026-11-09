@@ -24,9 +24,11 @@ done
 
 # --- Panel: one slim top bar, no dock ---
 # Rebuilt from scratch on every run so the result never depends on old state.
-# Panel 1 (full width): menu | workspaces | window icons | ------ | tray, volume, power
-# Panel 2 (overlay):    the clock alone, snapped to the top center. In panel 1 the
-#                       clock drifted with the number of open windows.
+# Three panels side by side, so the clock stays centered whatever is open:
+#   Panel 1 (left):   menu | workspaces | window list
+#   Panel 2 (center): clock
+#   Panel 3 (right):  tray, volume, power
+# They must not overlap: a panel laid over another gets hidden when the lower one is clicked.
 # Colors and fonts live in dotfiles/gtk/.config/gtk-3.0/gtk.css (widget names = <plugin>-<id>).
 xfce4-panel --quit || true
 xfconf-query -c xfce4-panel -p / -R -r || true
@@ -42,30 +44,27 @@ launcher() {  # launcher <plugin-id> <name> <exec> <icon>
 }
 
 p /configver -t int -s 2
-p /panels    -t int -s 1 -t int -s 2
+p /panels    -t int -s 1 -t int -s 2 -t int -s 3
 p /panels/dark-mode -t bool -s true
 
-p /panels/panel-1/position        -t string -s "p=6;x=0;y=0"   # 6 = top, full width
-p /panels/panel-1/position-locked -t bool   -s true
-p /panels/panel-1/length          -t double -s 100
-p /panels/panel-1/size            -t int    -s 28
-p /panels/panel-1/icon-size       -t int    -s 16
-p /panels/panel-1/background-style -t int   -s 1                # 1 = solid color
-# Gruvbox bg0_h (#1d2021), fully opaque: the clock panel sits on top and any
-# transparency makes its box visible against the bar.
+# Gruvbox bg0_h (#1d2021), the same on all three so they read as one bar
 BAR_RGBA=(-t double -s 0.114 -t double -s 0.125 -t double -s 0.129 -t double -s 1.0)
-p /panels/panel-1/background-rgba "${BAR_RGBA[@]}"
-p /panels/panel-1/plugin-ids -t int -s 10 -t int -s 1 -t int -s 2 -t int -s 3 \
-                             -t int -s 6 -t int -s 7 -t int -s 8 -t int -s 9
-
-p /panels/panel-2/position        -t string -s "p=9;x=0;y=0"   # 9 = top center
-p /panels/panel-2/position-locked -t bool   -s true
-p /panels/panel-2/length          -t double -s 1               # shrink to content
-p /panels/panel-2/size            -t int    -s 28
-p /panels/panel-2/disable-struts  -t bool   -s true            # don't push windows down twice
-p /panels/panel-2/background-style -t int   -s 1
-p /panels/panel-2/background-rgba "${BAR_RGBA[@]}"
-p /panels/panel-2/plugin-ids -t int -s 4 -a                  # -a: a one-item list, not a plain int
+bar() {  # bar <id> <snap position> <length %>
+  p "/panels/panel-$1/position"         -t string -s "p=$2;x=0;y=0"
+  p "/panels/panel-$1/position-locked"  -t bool   -s true
+  p "/panels/panel-$1/length"           -t double -s "$3"
+  p "/panels/panel-$1/length-adjust"    -t bool   -s false      # keep the length even with many windows
+  p "/panels/panel-$1/size"             -t int    -s 28
+  p "/panels/panel-$1/icon-size"        -t int    -s 16
+  p "/panels/panel-$1/background-style" -t int    -s 1          # 1 = solid color
+  p "/panels/panel-$1/background-rgba"  "${BAR_RGBA[@]}"
+}
+bar 1 6  44
+bar 2 9  12.2                  # a hair wide: rounding left a 1px gap that showed the wallpaper
+bar 3 2  44
+p /panels/panel-1/plugin-ids -t int -s 10 -t int -s 1 -t int -s 2
+p /panels/panel-2/plugin-ids -t int -s 3 -t int -s 4 -t int -s 5
+p /panels/panel-3/plugin-ids -t int -s 11 -t int -s 6 -t int -s 7 -t int -s 8 -t int -s 9
 
 launcher 10 navi-menu "rofi -show drun" "$NAVI_DIR/icons/navi-menu.svg"
 p /plugins/plugin-1 -t string -s pager
@@ -73,11 +72,15 @@ p /plugins/plugin-1/miniature-view -t bool -s false             # numbered butto
 p /plugins/plugin-2 -t string -s tasklist
 p /plugins/plugin-2/flat-buttons   -t bool -s true
 p /plugins/plugin-2/show-handle    -t bool -s false
-p /plugins/plugin-2/show-labels    -t bool -s false             # icons only
 p /plugins/plugin-2/include-all-workspaces -t bool -s false   # only this workspace's windows
-p /plugins/plugin-3 -t string -s separator
-p /plugins/plugin-3/expand -t bool -s true
-p /plugins/plugin-3/style  -t int  -s 0                         # 0 = invisible
+spacer() {  # expanding invisible separator
+  p "/plugins/plugin-$1" -t string -s separator
+  p "/plugins/plugin-$1/expand" -t bool -s true
+  p "/plugins/plugin-$1/style"  -t int  -s 0
+}
+spacer 3
+spacer 5
+spacer 11
 p /plugins/plugin-4 -t string -s clock
 p /plugins/plugin-4/mode -t int -s 2                            # 2 = digital
 p /plugins/plugin-4/digital-layout      -t int    -s 3          # 3 = time only
@@ -105,11 +108,6 @@ k "<Super>Tab"     "rofi -show window"
 k "<Super>e"       "nemo"
 k "<Super>Return"  "alacritty"
 k "<Super>r"       "rofi -show run"
-# Directional tiling, Cinnamon style (Left then Up = top-left quarter)
-k "<Super>Left"    "$HOME/.local/bin/navi-tile left"
-k "<Super>Right"   "$HOME/.local/bin/navi-tile right"
-k "<Super>Up"      "$HOME/.local/bin/navi-tile up"
-k "<Super>Down"    "$HOME/.local/bin/navi-tile down"
 # Screenshots, Cinnamon style: add Ctrl to copy straight to the clipboard
 k Print                    "xfce4-screenshooter -f"      # full screen  -> dialog
 k "<Shift>Print"           "xfce4-screenshooter -r"      # region       -> dialog
@@ -128,16 +126,18 @@ w() {
     | while read -r old; do xfconf-query -c xfce4-keyboard-shortcuts -p "$old" -r; done
   xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/$1" -n -t string -s "$2"
 }
-# Super+arrows belong to navi-tile (below), so xfwm4's own tiling goes back to
-# its keypad defaults. Two programs can't grab the same key.
-w "<Super>KP_Left"     tile_left_key
-w "<Super>KP_Right"    tile_right_key
-w "<Super>KP_Up"       tile_up_key
-w "<Super>KP_Down"     tile_down_key
-w "<Super>KP_Home"     tile_up_left_key
-w "<Super>KP_Page_Up"  tile_up_right_key
-w "<Super>KP_End"      tile_down_left_key
-w "<Super>KP_Next"     tile_down_right_key
+# Tiling: xfwm4's own. The old navi-tile script bound these as commands; drop those.
+for key in Left Right Up Down; do
+  xfconf-query -c xfce4-keyboard-shortcuts -p "/commands/custom/<Super>$key" -r 2>/dev/null || true
+done
+w "<Super>Left"            tile_left_key
+w "<Super>Right"           tile_right_key
+w "<Super>Up"              tile_up_key
+w "<Super>Down"            tile_down_key
+w "<Super><Shift>Left"     tile_up_left_key
+w "<Super><Shift>Right"    tile_up_right_key
+w "<Super><Primary>Left"   tile_down_left_key
+w "<Super><Primary>Right"  tile_down_right_key
 w "<Alt>F10"           maximize_window_key
 w "<Alt>F9"            hide_window_key
 w "<Super>1"           workspace_1_key      # was Ctrl+F1, etc.

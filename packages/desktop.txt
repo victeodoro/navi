@@ -48,5 +48,3 @@ firefox-esr
 xfce4-screenshooter
 xfce4-clipman-plugin   # clipboard manager: keeps copied screenshots after the tool exits
 
-# Window control for navi-tile
-wmctrl

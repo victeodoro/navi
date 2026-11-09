@@ -21,7 +21,8 @@
 - Never bind bare Super_L as a shortcut: it grabs Super and swallows every Super+<key> combo. xcape maps a Super tap to Super+Space instead.
 - Debugging shortcuts: when xfwm4 doesn't match a window shortcut it replays the key to the app, so you see junk like `;3~` typed in the terminal.
 - xfconf arrays: a single value is stored as a plain int unless you pass `-a`. A panel with `plugin-ids` saved as a plain int shows up empty.
-- XFCE panels can't center a plugin inside a full-width panel (expanding separators shift with the window list). Navi puts the clock in a second panel snapped to top center. Both panels must be the same opaque color or the overlay's box shows.
+- XFCE panels can't center a plugin inside a full-width panel (expanding separators shift with the window list). Navi uses three non-overlapping panels (44/12/44%). Don't overlay panels: clicking the lower one raises it over the other.
+- A custom tiling script (wmctrl) misplaced Firefox and was removed: apps that draw their own title bar report frames differently. xfwm4's built-in tiling handles them.
 - Panel hover styles look like rendering bugs in screenshots when the mouse is parked on the bar. Move the pointer away before judging.
 - Screenshots to clipboard: xfce4-screenshooter -c keeps running to serve the clipboard; clipman (clipboard manager) keeps the image after it exits.
 
