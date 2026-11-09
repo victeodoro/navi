@@ -17,7 +17,7 @@ install_list packages/shell.txt
 # --- Dotfiles ---
 # Apps write their own files (e.g. GTK bookmarks) into these folders, so they
 # must be real directories; otherwise stow links the whole folder into the repo.
-mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/autostart"
+mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/autostart" "$HOME/.local/bin"
 (cd dotfiles && stow -t "$HOME" --restow */)
 
 # VM-only packages, auto-detected
@@ -72,6 +72,12 @@ fi
 if [ "$(getent passwd "$USER" | cut -d: -f7)" != "/usr/bin/zsh" ]; then
   sudo chsh -s /usr/bin/zsh "$USER"
 fi
+
+# --- Login screen (LightDM greeter): needs system-wide copies, it can't read $HOME ---
+sudo install -D -m 644 wallpapers/lain.png /usr/share/backgrounds/navi/lain.png
+sudo install -D -m 644 system/usr/share/themes/Navi-Greeter/gtk-3.0/gtk.css \
+  /usr/share/themes/Navi-Greeter/gtk-3.0/gtk.css
+sudo install -m 644 system/etc/lightdm/lightdm-gtk-greeter.conf /etc/lightdm/lightdm-gtk-greeter.conf
 
 # System config files
 sudo install -m 644 system/etc/default/keyboard /etc/default/keyboard

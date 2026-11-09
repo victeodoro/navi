@@ -20,6 +20,10 @@
 - xfwm4 allows ONE key per window action. Binding Super+Up to maximize while Alt+F10 still had it silently killed one of them; this broke Alt+F4/Alt+F10. xfce-settings.sh unbinds the old key first. Changes need an xfwm4 restart (or re-login) to fully apply.
 - Never bind bare Super_L as a shortcut: it grabs Super and swallows every Super+<key> combo. xcape maps a Super tap to Super+Space instead.
 - Debugging shortcuts: when xfwm4 doesn't match a window shortcut it replays the key to the app, so you see junk like `;3~` typed in the terminal.
+- xfconf arrays: a single value is stored as a plain int unless you pass `-a`. A panel with `plugin-ids` saved as a plain int shows up empty.
+- XFCE panels can't center a plugin inside a full-width panel (expanding separators shift with the window list). Navi puts the clock in a second panel snapped to top center. Both panels must be the same opaque color or the overlay's box shows.
+- Panel hover styles look like rendering bugs in screenshots when the mouse is parked on the bar. Move the pointer away before judging.
+- Screenshots to clipboard: xfce4-screenshooter -c keeps running to serve the clipboard; clipman (clipboard manager) keeps the image after it exits.
 
 ## Credits
 - Wallpaper `wallpapers/lain.png`: by patrika (https://alphacoders.com/users/profile/227699/patrika). Redistributed with attribution, as permitted by the author. Download link: https://wall.alphacoders.com/big.php?i=1371077

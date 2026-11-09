@@ -1,5 +1,7 @@
 /* Navi: user GTK3 overrides.
- * Everything here is scoped to the XFCE panel, so apps keep the Gruvbox theme.
+ * Panel rules are scoped to .xfce4-panel. Menus and the calendar are global on
+ * purpose: tray popups (network, volume) are separate programs and can't be
+ * scoped, so every app's menus share the dark warm look.
  * Panel plugins are named <plugin>-<id> (ids set in xfce-settings.sh).
  * Debug live with: GTK_DEBUG=interactive xfce4-panel -r
  */
@@ -19,8 +21,10 @@
 }
 
 /* Menu button */
-#launcher-10 button { padding: 0 8px; }
-#launcher-10 button:hover { background: rgba(214, 93, 14, 0.25); }
+#launcher-10 button,
+#launcher-9 button { padding: 0 9px; }
+#launcher-10 button:hover,
+#launcher-9 button:hover { background: rgba(214, 93, 14, 0.25); }
 
 /* Workspaces: current one is a solid orange block */
 #pager-1 button,
@@ -53,5 +57,51 @@
 
 /* Right side */
 #pulseaudio-7 button:hover,
-#actions-9 button:hover { background: rgba(214, 93, 14, 0.25); }
-#actions-9 label { color: #fe8019; }
+#systray-6 button:hover { background: rgba(214, 93, 14, 0.25); }
+#tasklist-2 button { padding: 0 8px; }
+
+/* ---------- Menus (all apps + tray popups) ---------- */
+menu, .menu, .context-menu {
+  background: #282828;
+  color: #ebdbb2;
+  border: 1px solid #504945;
+  padding: 4px;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 9pt;
+}
+menu menuitem { padding: 5px 12px; border-radius: 4px; color: #ebdbb2; }
+menu menuitem:hover { background: #d65d0e; color: #1d2021; }
+menu menuitem:hover label { color: #1d2021; }
+menu menuitem:disabled, menu menuitem:disabled label { color: #665c54; }
+menu separator { background: #3c3836; min-height: 1px; margin: 4px 6px; }
+menu check, menu radio { color: #fe8019; }
+menu arrow { color: #a89984; }
+
+/* Volume slider inside the volume popup */
+menu scale trough { background: #3c3836; min-height: 4px; border: none; border-radius: 2px; }
+menu scale highlight { background: #fe8019; border: none; border-radius: 2px; }
+menu scale slider {
+  background: #ebdbb2;
+  background-image: none;          /* the theme draws a big square knob image */
+  border: 2px solid #fe8019;
+  box-shadow: none;
+  min-width: 12px;
+  min-height: 12px;
+  margin: -6px 0;
+  border-radius: 50%;
+}
+
+/* ---------- Calendar (clock popup) ---------- */
+calendar {
+  background: #282828;
+  color: #ebdbb2;
+  border: none;
+  padding: 8px;
+  font-family: "JetBrainsMono Nerd Font";
+}
+calendar.header { background: transparent; color: #fe8019; border: none; font-weight: bold; }
+calendar.button { color: #a89984; }
+calendar.button:hover { color: #fe8019; }
+calendar:selected { background: #d65d0e; color: #1d2021; border-radius: 4px; }
+calendar.highlight { color: #d79921; font-weight: bold; }
+calendar:indeterminate { color: #504945; }

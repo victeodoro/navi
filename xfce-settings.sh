@@ -24,46 +24,56 @@ done
 
 # --- Panel: one slim top bar, no dock ---
 # Rebuilt from scratch on every run so the result never depends on old state.
-# Layout: menu | workspaces | windows | ------ clock ------ | tray, volume, session
+# Panel 1 (full width): menu | workspaces | window icons | ------ | tray, volume, power
+# Panel 2 (overlay):    the clock alone, snapped to the top center. In panel 1 the
+#                       clock drifted with the number of open windows.
 # Colors and fonts live in dotfiles/gtk/.config/gtk-3.0/gtk.css (widget names = <plugin>-<id>).
 xfce4-panel --quit || true
 xfconf-query -c xfce4-panel -p / -R -r || true
 rm -rf "$HOME/.config/xfce4/panel"
 
 p() { xfconf-query -c xfce4-panel -p "$1" -n "${@:2}"; }
+launcher() {  # launcher <plugin-id> <name> <exec> <icon>
+  p "/plugins/plugin-$1" -t string -s launcher
+  p "/plugins/plugin-$1/items" -t string -s "$2.desktop" -a
+  mkdir -p "$HOME/.config/xfce4/panel/launcher-$1"
+  printf '[Desktop Entry]\nType=Application\nName=%s\nExec=%s\nIcon=%s\n' \
+    "$2" "$3" "$4" > "$HOME/.config/xfce4/panel/launcher-$1/$2.desktop"
+}
 
 p /configver -t int -s 2
-p /panels    -t int -s 1 -a
+p /panels    -t int -s 1 -t int -s 2
 p /panels/dark-mode -t bool -s true
-p /panels/panel-1/position        -t string -s "p=6;x=0;y=0"   # 6 = top
+
+p /panels/panel-1/position        -t string -s "p=6;x=0;y=0"   # 6 = top, full width
 p /panels/panel-1/position-locked -t bool   -s true
 p /panels/panel-1/length          -t double -s 100
 p /panels/panel-1/size            -t int    -s 28
 p /panels/panel-1/icon-size       -t int    -s 16
 p /panels/panel-1/background-style -t int   -s 1                # 1 = solid color
-# Gruvbox bg0_h (#1d2021) at 92% opacity
-p /panels/panel-1/background-rgba -t double -s 0.114 -t double -s 0.125 -t double -s 0.129 -t double -s 0.92
-p /panels/panel-1/plugin-ids -t int -s 10 -t int -s 1 -t int -s 2 -t int -s 3 -t int -s 4 \
-                             -t int -s 5 -t int -s 6 -t int -s 7 -t int -s 8 -t int -s 9
+# Gruvbox bg0_h (#1d2021), fully opaque: the clock panel sits on top and any
+# transparency makes its box visible against the bar.
+BAR_RGBA=(-t double -s 0.114 -t double -s 0.125 -t double -s 0.129 -t double -s 1.0)
+p /panels/panel-1/background-rgba "${BAR_RGBA[@]}"
+p /panels/panel-1/plugin-ids -t int -s 10 -t int -s 1 -t int -s 2 -t int -s 3 \
+                             -t int -s 6 -t int -s 7 -t int -s 8 -t int -s 9
 
-# Menu button: Debian logo that opens rofi
-p /plugins/plugin-10 -t string -s launcher
-p /plugins/plugin-10/items -t string -s navi-menu.desktop -a
-mkdir -p "$HOME/.config/xfce4/panel/launcher-10"
-cat > "$HOME/.config/xfce4/panel/launcher-10/navi-menu.desktop" <<'DESKTOP'
-[Desktop Entry]
-Type=Application
-Name=Apps
-Comment=Open the app launcher
-Exec=rofi -show drun
-Icon=distributor-logo-debian
-DESKTOP
+p /panels/panel-2/position        -t string -s "p=9;x=0;y=0"   # 9 = top center
+p /panels/panel-2/position-locked -t bool   -s true
+p /panels/panel-2/length          -t double -s 1               # shrink to content
+p /panels/panel-2/size            -t int    -s 28
+p /panels/panel-2/disable-struts  -t bool   -s true            # don't push windows down twice
+p /panels/panel-2/background-style -t int   -s 1
+p /panels/panel-2/background-rgba "${BAR_RGBA[@]}"
+p /panels/panel-2/plugin-ids -t int -s 4 -a                  # -a: a one-item list, not a plain int
 
+launcher 10 navi-menu "rofi -show drun" "$NAVI_DIR/icons/navi-menu.svg"
 p /plugins/plugin-1 -t string -s pager
 p /plugins/plugin-1/miniature-view -t bool -s false             # numbered buttons
 p /plugins/plugin-2 -t string -s tasklist
 p /plugins/plugin-2/flat-buttons   -t bool -s true
 p /plugins/plugin-2/show-handle    -t bool -s false
+p /plugins/plugin-2/show-labels    -t bool -s false             # icons only
 p /plugins/plugin-2/include-all-workspaces -t bool -s false   # only this workspace's windows
 p /plugins/plugin-3 -t string -s separator
 p /plugins/plugin-3/expand -t bool -s true
@@ -73,19 +83,13 @@ p /plugins/plugin-4/mode -t int -s 2                            # 2 = digital
 p /plugins/plugin-4/digital-layout      -t int    -s 3          # 3 = time only
 p /plugins/plugin-4/digital-time-format -t string -s "%a %d %b  %H:%M"
 p /plugins/plugin-4/digital-time-font   -t string -s "JetBrainsMono Nerd Font Bold 9"   # clock ignores the panel CSS font
-p /plugins/plugin-5 -t string -s separator
-p /plugins/plugin-5/expand -t bool -s true
-p /plugins/plugin-5/style  -t int  -s 0
 p /plugins/plugin-6 -t string -s systray
 p /plugins/plugin-6/square-icons -t bool -s true
 p /plugins/plugin-7 -t string -s pulseaudio
 p /plugins/plugin-7/enable-keyboard-shortcuts -t bool -s true
 p /plugins/plugin-8 -t string -s separator
 p /plugins/plugin-8/style -t int -s 0
-p /plugins/plugin-9 -t string -s actions
-p /plugins/plugin-9/appearance   -t int -s 1                    # 1 = menu
-p /plugins/plugin-9/button-title -t int -s 3                    # 3 = custom label
-p /plugins/plugin-9/custom-title -t string -s $'\uf011'           # Nerd Font power glyph
+launcher 9 navi-power "$HOME/.local/bin/navi-power" "$NAVI_DIR/icons/navi-power.svg"
 
 setsid -f xfce4-panel >/dev/null 2>&1
 
@@ -101,10 +105,21 @@ k "<Super>Tab"     "rofi -show window"
 k "<Super>e"       "nemo"
 k "<Super>Return"  "alacritty"
 k "<Super>r"       "rofi -show run"
-k Print            "xfce4-screenshooter -f"
-k "<Shift>Print"   "xfce4-screenshooter -r"
-# Window tiling (xfwm4 built-ins). Dragging a window to a screen edge also tiles it.
-# Note: xfconf spells Ctrl as <Primary>.
+# Directional tiling, Cinnamon style (Left then Up = top-left quarter)
+k "<Super>Left"    "$HOME/.local/bin/navi-tile left"
+k "<Super>Right"   "$HOME/.local/bin/navi-tile right"
+k "<Super>Up"      "$HOME/.local/bin/navi-tile up"
+k "<Super>Down"    "$HOME/.local/bin/navi-tile down"
+# Screenshots, Cinnamon style: add Ctrl to copy straight to the clipboard
+k Print                    "xfce4-screenshooter -f"      # full screen  -> dialog
+k "<Shift>Print"           "xfce4-screenshooter -r"      # region       -> dialog
+k "<Alt>Print"             "xfce4-screenshooter -w"      # window       -> dialog
+k "<Primary>Print"         "xfce4-screenshooter -f -c"   # full screen  -> clipboard
+k "<Primary><Shift>Print"  "xfce4-screenshooter -r -c"   # region       -> clipboard
+k "<Primary><Alt>Print"    "xfce4-screenshooter -w -c"   # window       -> clipboard
+# Power menu
+k "<Primary><Alt>Delete"   "$HOME/.local/bin/navi-power"
+# xfwm4 window actions. xfconf spells Ctrl as <Primary>.
 # xfwm4 allows ONE key per action: if two keys map to the same action, one
 # silently stops working (this broke Alt+F4 once). w() unbinds the old key first.
 w() {
@@ -113,18 +128,22 @@ w() {
     | while read -r old; do xfconf-query -c xfce4-keyboard-shortcuts -p "$old" -r; done
   xfconf-query -c xfce4-keyboard-shortcuts -p "/xfwm4/custom/$1" -n -t string -s "$2"
 }
-w "<Super>Left"            tile_left_key        # was Super+Keypad4
-w "<Super>Right"           tile_right_key
-w "<Super>Up"              maximize_window_key  # was Alt+F10
-w "<Super>Down"            hide_window_key      # was Alt+F9
-w "<Super><Shift>Left"     tile_up_left_key
-w "<Super><Shift>Right"    tile_up_right_key
-w "<Super><Primary>Left"   tile_down_left_key
-w "<Super><Primary>Right"  tile_down_right_key
-w "<Super>1"               workspace_1_key      # was Ctrl+F1, etc.
-w "<Super>2"               workspace_2_key
-w "<Super>3"               workspace_3_key
-w "<Super>4"               workspace_4_key
+# Super+arrows belong to navi-tile (below), so xfwm4's own tiling goes back to
+# its keypad defaults. Two programs can't grab the same key.
+w "<Super>KP_Left"     tile_left_key
+w "<Super>KP_Right"    tile_right_key
+w "<Super>KP_Up"       tile_up_key
+w "<Super>KP_Down"     tile_down_key
+w "<Super>KP_Home"     tile_up_left_key
+w "<Super>KP_Page_Up"  tile_up_right_key
+w "<Super>KP_End"      tile_down_left_key
+w "<Super>KP_Next"     tile_down_right_key
+w "<Alt>F10"           maximize_window_key
+w "<Alt>F9"            hide_window_key
+w "<Super>1"           workspace_1_key      # was Ctrl+F1, etc.
+w "<Super>2"           workspace_2_key
+w "<Super>3"           workspace_3_key
+w "<Super>4"           workspace_4_key
 # Close stays on Alt+F4 (xfwm4 default)
 xfconf-query -c xfwm4 -p /general/tile_on_move -n -t bool -s true
 # Never bind bare Super_L: it grabs the key and swallows every Super+<key>

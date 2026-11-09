@@ -8,6 +8,8 @@ configuration {
   display-drun: " apps";
   display-run: " run";
   display-window: " windows";
+  // A Super tap arrives as Super+Space (xcape), so pressing Super again closes rofi
+  kb-cancel: "Escape,Control+g,Control+bracketleft,Super+space";
 }
 
 // Full path on purpose: a bare "navi" matches the ~/navi repo folder

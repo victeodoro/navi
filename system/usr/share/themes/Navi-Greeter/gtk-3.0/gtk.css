@@ -1,0 +1,55 @@
+/* Navi greeter theme: GTK's built-in dark Adwaita + warm Gruvbox overrides.
+ * Widget names (#login_window, ...) come from lightdm-gtk-greeter's UI file. */
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+
+* { font-family: "JetBrains Mono"; }
+
+/* Top bar: host, clock, session and power menus */
+#panel_window {
+  background: rgba(29, 32, 33, 0.88);
+  color: #ebdbb2;
+  border-bottom: 1px solid #3c3836;
+}
+#panel_window menubar { background: transparent; border: none; box-shadow: none; }
+#panel_window menubar > menuitem { color: #ebdbb2; padding: 4px 10px; }
+#panel_window menubar > menuitem:hover { background: #d65d0e; color: #1d2021; }
+#panel_window #clock_label, #panel_window label { color: #fe8019; font-weight: bold; }
+
+menu { background: #282828; color: #ebdbb2; border: 1px solid #504945; padding: 4px; }
+menu menuitem { padding: 5px 12px; border-radius: 4px; }
+menu menuitem:hover { background: #d65d0e; color: #1d2021; }
+
+/* Login box */
+#login_window, #power_window {
+  background: rgba(29, 32, 33, 0.92);
+  border: 2px solid #d65d0e;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+}
+#content_frame { background: transparent; border: none; padding: 20px 26px 10px 26px; }
+#buttonbox_frame { background: transparent; border: none; padding: 0 26px 20px 26px; }
+#login_window label, #power_window label { color: #ebdbb2; }
+#greeter_infobar, #message_label { color: #fabd2f; }
+
+entry, combobox button {
+  background: #282828;
+  color: #ebdbb2;
+  border: 1px solid #504945;
+  border-radius: 6px;
+  padding: 6px 10px;
+  box-shadow: none;
+  caret-color: #fe8019;
+}
+entry:focus { border-color: #fe8019; }
+
+button {
+  background: #3c3836;
+  color: #ebdbb2;
+  border: none;
+  border-radius: 6px;
+  box-shadow: none;
+  padding: 6px 14px;
+}
+button:hover { background: #504945; }
+#login_button, #power_ok_button { background: #d65d0e; color: #1d2021; font-weight: bold; }
+#login_button:hover, #power_ok_button:hover { background: #fe8019; }

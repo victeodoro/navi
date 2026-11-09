@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# navi-power: power menu in rofi, same look as the launcher.
+# Replaces XFCE's logout dialog. Bound to the panel power button and Ctrl+Alt+Delete.
+set -euo pipefail
+
+logout=$'\U000f0343  log out'
+suspend=$'\U000f04b2  suspend'
+reboot=$'  reboot'
+poweroff=$'  shut down'
+
+choice=$(printf '%s\n' "$logout" "$suspend" "$reboot" "$poweroff" | rofi -dmenu -i \
+  -p "" -no-custom -selected-row 0 \
+  -theme-str 'window { width: 260px; } mainbox { children: [ listview ]; } listview { lines: 4; }') || exit 0
+
+case "$choice" in
+  "$logout")   xfce4-session-logout --logout --fast ;;
+  "$suspend")  xfce4-session-logout --suspend ;;
+  "$reboot")   xfce4-session-logout --reboot --fast ;;
+  "$poweroff") xfce4-session-logout --halt --fast ;;
+esac
