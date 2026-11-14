@@ -1,7 +1,9 @@
-# Apps. Installed last, after Proton's apt repo is added (bootstrap.sh).
+# Apps from Debian for EVERY Navi desktop (personal and work).
+# Apps from other sources, and the personal/work ones, are in scripts/apps.sh.
 
-# Browser: Debian's Firefox ESR, security fixes come through apt
+# Browsers: Debian's builds, security fixes come through apt
 firefox-esr
+chromium
 
 # Viewers and editor
 micro                         # terminal editor with normal shortcuts (Ctrl+S/C/V)
@@ -25,10 +27,7 @@ ffmpegthumbnailer
 7zip
 jq
 
-# Proton (Proton Pass is a .deb, installed by bootstrap.sh)
-proton-vpn-gnome-desktop      # Proton VPN; "gnome" is only the name, works on XFCE
-gir1.2-ayatanaappindicator3-0.1   # Proton VPN tray icon (only "Suggested" upstream)
-
 # Security tools
 aircrack-ng                   # Wi-Fi auditing (airmon-ng, airodump-ng, aireplay-ng)
 ieee-data                     # vendor names for MAC addresses in airodump-ng
+nmap                          # network scanner

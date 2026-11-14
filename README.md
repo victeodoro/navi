@@ -1,11 +1,26 @@
 # Navi
 
-## Manual pre-steps (fresh Debian 13 netinst, no desktop)
+## Install (fresh Debian 13 netinst, no desktop)
 
-1. Log as root (`su -`), install git and sudo (`apt install sudo git`) and set your user as part as sudo group (`usermod -aG sudo <user>`). Logout and the changes should take place.
-2. Clone this repo (`git clone https://github.com/victeodoro/navi.git`; HTTPS needs no SSH key yet), then run `./bootstrap.sh`
-3. Log into XFCE, then run `./xfce-settings.sh` from a terminal inside the desktop.
-4. Log out and back in once (touchpad, screen and keyring settings start on a new login). Details and personal steps: the install guide in NOTES.md.
+1. As root (`su -`): `apt install sudo git`, then `usermod -aG sudo <user>`. Log out and back in.
+2. As your user:
+   ```sh
+   git clone https://github.com/victeodoro/navi.git   # HTTPS: no SSH key needed yet
+   cd navi && ./install.sh          # personal desktop
+   ./install.sh --work              # or: work desktop, pick the work apps from a list
+   ```
+3. Reboot and log in. The desktop settings apply by themselves on that first login; when the notice shows, log out and back in once.
+
+Re-running `./install.sh` (also from inside the desktop) is safe: installed apps are skipped and dotfiles reset to the repo versions. Personal steps that can't be scripted: install guide in NOTES.md.
+
+## Apps
+| Group | Apps | When |
+|---|---|---|
+| all | Firefox ESR, Chromium, Obsidian, Postman, omp, Burp Suite Community, nmap, aircrack-ng, micro, zathura, Ristretto, btop/bat/fzf/ripgrep/fd | always |
+| personal | Spotify, Proton VPN, Proton Pass | without `--work` |
+| work | Teams (teams-for-linux), Slack, LibreOffice, Cloudflare WARP, Heroku CLI, gcloud, Claude Code, VS Code | `--work`, each one picked in the menu |
+
+Debian apps are listed in packages/apps.txt; everything else has a recipe in scripts/apps.sh (to add an app: write an `app_<id>` function and put the id in one of the lists at the top).
 
 ## Decisions
 - Desktop: XFCE, minimal core with no goodies. Chose it over Cinnamon/Sway for being light and modular.
@@ -16,18 +31,19 @@
 - Power menu: navi-power (rofi) replaces the XFCE logout dialog.
 - Login screen: LightDM GTK greeter with the wallpaper and a Navi-Greeter theme (system/).
 - Windows: Gruvbox-Orange-Light xfwm4 theme, same as the GTK theme.
-- Browser: Firefox ESR (Debian's, gets security updates through apt).
+- Browsers: Firefox ESR and Chromium (Debian's, security updates through apt).
 - Launcher: rofi with a custom warm Gruvbox theme (dotfiles/rofi). Super opens it.
 - Shell: zsh (Kali's default too) with autosuggestions + syntax highlighting, starship prompt, fastfetch banner. Terminal: Alacritty only (xfce4-terminal removed).
 - File managers: Nemo (GUI, from Linux Mint, follows the GTK theme) + yazi (terminal, pinned GitHub release).
-- Apps: Blueman (Bluetooth), XFCE Power Manager (battery), micro (editor), Ristretto (pictures), zathura (PDF), btop/bat/fzf/ripgrep/fd (terminal), Spotify (Flatpak). See packages/apps.txt.
-- Proton: Proton VPN from Proton's signed apt repo (updates through apt), Proton Pass from Proton's .deb (updates itself). Logins live in gnome-keyring, unlocked at login. See packages/apps.txt.
+- Hardware panels: Blueman (Bluetooth), XFCE Power Manager (battery, brightness).
+- App sources, in order of preference: Debian apt > the vendor's signed apt repo (WARP, gcloud, VS Code, Proton VPN) > Flathub (Spotify, Teams, Slack, Obsidian, Postman) > the vendor's installer (Proton Pass, Heroku, Claude Code, omp, Burp). Self-updating apps install per-user so their updater can write to its own folder.
+- Install scripts: install.sh is the entry point; it runs scripts/system.sh (packages, dotfiles, themes, system files), scripts/apps.sh (apps) and scripts/desktop.sh (XFCE settings; needs the session, so on a fresh install it runs on the first login).
+- Logins (Proton, Slack, VS Code...) live in gnome-keyring, unlocked at login.
 - Icons: Colloid, plain "Colloid-Orange-Gruvbox" variant (light app icons, light tray icons for the dark bar). Only the menu and power buttons are custom SVGs (icons/).
 - Touchpad: tap to click, set for every touchpad in system/etc/X11/xorg.conf.d.
 - Screen: never blanks, dims or turns off by itself. Lock: only on demand (Super+L or the power menu), via light-locker, which shows the login screen.
-- Packages: packages/system.txt (below the desktop), desktop.txt (XFCE and its tools), apps.txt (apps, Proton, security tools), vm.txt (only inside a VM).
-- Dotfiles: copied into $HOME by bootstrap, not linked, so apps never write into the repo.
-- Security tools: aircrack-ng.
+- Packages: packages/system.txt (below the desktop), desktop.txt (XFCE and its tools), apps.txt (Debian apps for every desktop), vm.txt (only inside a VM).
+- Dotfiles: copied into $HOME by install.sh, not linked, so apps never write into the repo.
 
 ## Shortcuts
 | Keys | Action |

@@ -2,7 +2,7 @@
 configuration {
   modi: "drun,run,window";
   show-icons: true;
-  icon-theme: "Colloid-Orange-Gruvbox-Light";
+  icon-theme: "Colloid-Orange-Gruvbox";
   font: "JetBrainsMono Nerd Font 11";
   drun-display-format: "{name}";
   display-drun: " apps";
@@ -10,6 +10,10 @@ configuration {
   display-window: " windows";
   // A Super tap arrives as Super+Space (xcape), so pressing Super again closes rofi
   kb-cancel: "Escape,Control+g,Control+bracketleft,Super+space";
+  // One click runs an entry (rofi's default needs a double-click: a single click
+  // only highlighted it, and the power menu seemed to do nothing)
+  me-select-entry: "";
+  me-accept-entry: "MousePrimary";
 }
 
 // Full path on purpose: a bare "navi" matches the ~/navi repo folder

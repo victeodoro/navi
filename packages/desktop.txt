@@ -3,6 +3,7 @@
 # Session, login and lock screen
 xfce4
 xfce4-notifyd
+libnotify-bin                 # notify-send, used by the first-login setup
 lightdm
 lightdm-gtk-greeter
 light-locker                  # lock screen, only when asked (Super+L / power menu)
@@ -42,7 +43,7 @@ zsh-syntax-highlighting       # colors commands green/red as you type (valid/typ
 starship                      # the prompt line (dir, git branch, etc.)
 fastfetch                     # system info banner shown when a terminal opens
 
-# File manager (yazi, the terminal one, is installed by bootstrap.sh)
+# File manager (yazi, the terminal one, is installed by scripts/system.sh)
 nemo
 libglib2.0-bin                # gsettings CLI, used to configure Nemo and light-locker
 gvfs                          # trash, mounts and network places in Nemo

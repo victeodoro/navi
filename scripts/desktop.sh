@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
-# Navi XFCE settings. Run from INSIDE the desktop session, not over SSH.
+# Navi step 3/3: XFCE settings. Needs the running desktop session, so install.sh
+# runs it directly when started inside XFCE, or sets it to run once at the next
+# login (--first-login) when started from a text console on a fresh install.
 set -euo pipefail
 
-NAVI_DIR="$(cd "$(dirname "$0")" && pwd)"
+NAVI_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+FIRST_LOGIN_ENTRY="$HOME/.config/autostart/navi-first-login.desktop"
+
+if [ "${1:-}" = "--first-login" ]; then
+  mkdir -p "$HOME/.cache"
+  exec >>"$HOME/.cache/navi-first-login.log" 2>&1
+  echo "--- $(date)"
+  # Let the session finish starting the panel before it's rebuilt
+  timeout 60 sh -c 'until pgrep -u "$USER" -x xfce4-panel >/dev/null; do sleep 1; done' || true
+fi
 
 # Hide default desktop icons
 xfconf-query -c xfce4-desktop -p /desktop-icons/style -n -t int -s 0   # 0 = no icons
@@ -192,3 +203,10 @@ xdg-mime default micro.desktop text/plain
 # Nemo: no desktop drawing, open terminals in Alacritty
 gsettings set org.nemo.desktop show-desktop-icons false
 gsettings set org.cinnamon.desktop.default-applications.terminal exec alacritty
+
+# First-login run done: remove the autostart entry. If anything above failed,
+# set -e stops before this line and it simply runs again at the next login.
+if [ "${1:-}" = "--first-login" ]; then
+  rm -f "$FIRST_LOGIN_ENTRY"
+  notify-send "Navi" "Desktop settings applied. Log out and back in once to finish." || true
+fi

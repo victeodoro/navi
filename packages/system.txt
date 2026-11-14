@@ -6,12 +6,13 @@ ca-certificates
 openssh-server
 xz-utils
 unzip                         # unpacks the yazi release
+whiptail                      # the --work app menu (install.sh)
 
 # Display server and input
 xorg
 dbus-x11
 at-spi2-core
-xinput                        # applies touchpad settings live (xfce-settings.sh)
+xinput                        # applies touchpad settings live (scripts/desktop.sh)
 
 # Audio
 pipewire

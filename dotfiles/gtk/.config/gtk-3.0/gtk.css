@@ -2,7 +2,7 @@
  * Panel rules are scoped to .xfce4-panel. Menus and the calendar are global on
  * purpose: tray popups (network, volume) are separate programs and can't be
  * scoped, so every app's menus share the dark warm look.
- * Panel plugins are named <plugin>-<id> (ids set in xfce-settings.sh).
+ * Panel plugins are named <plugin>-<id> (ids set in scripts/desktop.sh).
  * Debug live with: GTK_DEBUG=interactive xfce4-panel -r
  */
 
