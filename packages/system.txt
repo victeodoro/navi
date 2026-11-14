@@ -1,0 +1,32 @@
+# Base system: everything below the desktop. Installed first.
+
+# Core tools
+curl
+ca-certificates
+openssh-server
+xz-utils
+unzip                         # unpacks the yazi release
+
+# Display server and input
+xorg
+dbus-x11
+at-spi2-core
+xinput                        # applies touchpad settings live (xfce-settings.sh)
+
+# Audio
+pipewire
+pipewire-pulse
+wireplumber
+rtkit                         # realtime priority for PipeWire
+
+# Network and Bluetooth
+network-manager
+bluez
+
+# Permissions and secrets
+pkexec                        # runs XFCE's root helpers; without it the brightness slider does nothing
+gnome-keyring                 # stores app logins (Proton VPN, Proton Pass)
+libpam-gnome-keyring          # unlocks the keyring with your login password
+
+# App sandbox, used for Spotify
+flatpak

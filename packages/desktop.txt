@@ -1,47 +1,48 @@
-# Minimal XFCE setup
-xorg
+# XFCE desktop: session, panel, look and the tools it is driven with.
+
+# Session, login and lock screen
 xfce4
 xfce4-notifyd
 lightdm
 lightdm-gtk-greeter
-dbus-x11
-at-spi2-core
+light-locker                  # lock screen, only when asked (Super+L / power menu)
+mate-polkit                   # password prompts for admin actions; autostarted by Navi
 
-# Audio
-pipewire
-pipewire-pulse
-wireplumber
-pavucontrol
+# Panel plugins and tray apps
 xfce4-pulseaudio-plugin
-rtkit
-
-# Network
-network-manager
+pavucontrol
 network-manager-gnome
+blueman                       # Bluetooth: tray icon and pairing window
+xfce4-power-manager           # battery, brightness, lid and sleep settings
+xfce4-power-manager-plugins   # battery icon for the panel
+xfce4-screenshooter
+xfce4-clipman-plugin          # clipboard manager: keeps copied screenshots after the tool exits
+
+# Theme build and rendering
+gtk-update-icon-cache
+librsvg2-common               # SVG icons; without it GTK falls back to blurry PNGs
+sassc                         # GTK theme build dependency
+gtk2-engines-murrine          # GTK2 rendering engine
+gnome-themes-extra            # base theme assets
 
 # Fonts
 fonts-noto
 fonts-noto-color-emoji
 fonts-jetbrains-mono
 
-# Launcher
+# Launcher and terminal
 rofi
-xcape                  # tap Super alone = Super+Space (rofi), hold Super = combos still work
-
-# Terminal
+xcape                         # tap Super alone = Super+Space (rofi), hold Super = combos still work
 alacritty
 
-# File managers: Nemo (GUI) + yazi (TUI, installed by bootstrap.sh)
+# Shell
+zsh
+zsh-autosuggestions           # grey "ghost" suggestion from history, accept with →
+zsh-syntax-highlighting       # colors commands green/red as you type (valid/typo)
+starship                      # the prompt line (dir, git branch, etc.)
+fastfetch                     # system info banner shown when a terminal opens
+
+# File manager (yazi, the terminal one, is installed by bootstrap.sh)
 nemo
-libglib2.0-bin         # gsettings CLI, used to configure Nemo
-gvfs                   # trash, mounts and network places in Nemo
-unzip                  # unpacks the yazi release
-chafa                  # yazi image previews inside Alacritty
-
-# Browser: Debian's Firefox ESR, security fixes come through apt
-firefox-esr
-
-# Screenshots + clipboard
-xfce4-screenshooter
-xfce4-clipman-plugin   # clipboard manager: keeps copied screenshots after the tool exits
-
+libglib2.0-bin                # gsettings CLI, used to configure Nemo and light-locker
+gvfs                          # trash, mounts and network places in Nemo

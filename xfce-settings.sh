@@ -108,6 +108,27 @@ setsid -f xfce4-panel >/dev/null 2>&1
 # battery warnings are separate and still show.
 xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/general-notification -n -t bool -s false
 
+# --- Screen: never blanks, dims or turns off by itself ---
+# Three timers do it: the X server's own blanking (600 s by default), display
+# power saving, and XFCE Power Manager dimming the backlight when idle.
+pm() { xfconf-query -c xfce4-power-manager -p "/xfce4-power-manager/$1" -n "${@:2}"; }
+pm dpms-enabled            -t bool -s false   # display power saving off
+pm brightness-on-ac        -t int  -s 0       # 0 = never dim when idle
+pm brightness-on-battery   -t int  -s 0       # (default dims after 5 min on battery)
+xset s off -dpms                                # X blanking, running session; system/ X config covers next logins
+
+# --- Lock: only on demand (Super+L or the power menu), never automatically ---
+# light-locker shows the LightDM login screen as the lock screen.
+xfconf-query -c xfce4-session -p /general/LockCommand -n -t string -s "light-locker-command -l"
+pm lock-screen-suspend-hibernate -t bool -s false
+gsettings set apps.light-locker lock-on-suspend false
+gsettings set apps.light-locker lock-on-lid false
+
+# --- Touchpad: tap to click, live (the X config in system/ covers the next login) ---
+xinput list --name-only | grep -i touchpad | while read -r dev; do
+  xinput set-prop "$dev" "libinput Tapping Enabled" 1 || true
+done
+
 # --- Workspaces ---
 xfconf-query -c xfwm4 -p /general/workspace_count -s 4
 xfconf-query -c xfwm4 -p /general/workspace_names -n \
@@ -120,6 +141,7 @@ k "<Super>Tab"     "rofi -show window"
 k "<Super>e"       "nemo"
 k "<Super>Return"  "alacritty"
 k "<Super>r"       "rofi -show run"
+k "<Super>l"       "xflock4"                    # lock screen
 # Screenshots: every key opens the dialog, which defaults to "copy to clipboard"
 # (press Enter to confirm).
 k Print          "xfce4-screenshooter -f"      # full screen

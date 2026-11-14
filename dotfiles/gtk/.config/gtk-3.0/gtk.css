@@ -62,6 +62,7 @@
 #systray-6 { padding: 0 4px; }
 #power-manager-plugin-12 button,
 #pulseaudio-7 button { padding: 0 7px; }
+#power-manager-plugin-12 label { margin-left: 5px; }   /* gap between battery icon and % */
 #power-manager-plugin-12 button:hover,
 #pulseaudio-7 button:hover,
 #systray-6 button:hover { background: rgba(214, 93, 14, 0.25); }

@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Authentication agent
+Comment=Password prompts for admin actions (mounting disks, system settings)
+Exec=/usr/libexec/polkit-mate-authentication-agent-1
+X-GNOME-Autostart-enabled=true

@@ -1,6 +1,0 @@
-# Core system tools
-curl
-ca-certificates
-openssh-server
-stow
-xz-utils

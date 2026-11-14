@@ -1,3 +1,15 @@
+# Install guide
+Everything is done by the scripts; this is the order, plus the few steps that can't be scripted.
+
+1. Fresh Debian 13 netinst, no desktop. As root: `apt install sudo git`, `usermod -aG sudo <user>`, log out and back in.
+2. Clone the repo and run `./bootstrap.sh` (asks for your sudo password). Safe to re-run: it resets dotfiles to the repo versions.
+3. Log into XFCE and run `./xfce-settings.sh` from a terminal inside the desktop.
+4. Log out and back in once. The X config (touchpad, no blanking), the keyring unlock and the lock screen only start on a new login.
+
+Personal, not scripted:
+- GitHub over SSH with a key not named id_ed25519/id_rsa: SSH won't offer it (you get "Permission denied (publickey)" and never a passphrase prompt). Add to ~/.ssh/config: `Host github.com` / `IdentityFile ~/.ssh/<key>` / `IdentitiesOnly yes` / `AddKeysToAgent yes`.
+- Git identity: `git config --global user.name <name>` and `user.email <email>`.
+
 # Notes
 - NetworkManager ignores interfaces listed in /etc/network/interfaces. Navi ships a loopback-only version; it applies on reboot, so it's safe over SSH.
 - Screen sharing works out of the box on X11 (XFCE). It was a portal/PipeWire hassle on Sway.
@@ -9,11 +21,10 @@
 - The XFCE panel is rebuilt from scratch by xfce-settings.sh (channel reset + recreate). Editing it through the GUI works, but the next script run wipes those changes: put them in the script.
 - Alacritty opacity under xfwm4 looks far stronger than the number: 0.95 already shows windows behind clearly. 0.98 reads as subtle glass.
 - Nerd Font icons are Unicode private-use characters. Some editors and copy-paste paths silently drop them; if a prompt shows blanks, check the file with `grep -P '[\x{e000}-\x{f8ff}]'`.
-- Dotfile folders keep their files under a hidden `.config/` (e.g. dotfiles/rofi/.config/rofi/). Use `ls -a` to see it. Stow mirrors that path into $HOME.
+- Dotfile folders keep their files under a hidden `.config/` (e.g. dotfiles/rofi/.config/rofi/). Use `ls -a` to see it. Bootstrap copies that tree into $HOME as is.
 - rofi `@theme "navi"` broke when launched from $HOME: the bare name matched the ~/navi repo folder. Use a full path to the .rasi file.
 - Changing the login shell (chsh) only applies after logging out and back in: the running session keeps SHELL=/bin/bash.
 - Panel styling is GTK CSS in ~/.config/gtk-3.0/gtk.css, scoped with `.xfce4-panel` and plugin names like `#pager-1`. The clock plugin ignores CSS fonts: it has its own digital-time-font setting.
-- ~/.config/gtk-3.0 must be a real folder before stow runs, or GTK apps write bookmarks into the repo.
 - xfwm4 allows ONE key per window action. Binding Super+Up to maximize while Alt+F10 still had it silently killed one of them; this broke Alt+F4/Alt+F10. xfce-settings.sh unbinds the old key first. Changes need an xfwm4 restart (or re-login) to fully apply.
 - Never bind bare Super_L as a shortcut: it grabs Super and swallows every Super+<key> combo. xcape maps a Super tap to Super+Space instead.
 - Debugging shortcuts: when xfwm4 doesn't match a window shortcut it replays the key to the app, so you see junk like `;3~` typed in the terminal.
@@ -22,12 +33,15 @@
 - A custom tiling script (wmctrl) misplaced Firefox and was removed: apps that draw their own title bar report frames differently. xfwm4's built-in tiling handles them.
 - Panel hover styles look like rendering bugs in screenshots when the mouse is parked on the bar. Move the pointer away before judging.
 - Screenshots: the dialog's default action lives in ~/.config/xfce4/xfce4-screenshooter (action=2 is clipboard). Ctrl+C doesn't work in that dialog; Enter confirms. Clipman keeps the image after the tool exits.
-- Stow links a whole folder when the target doesn't exist yet. ~/.config/xfce4 ended up as a link into the repo, so xfconf saved live settings into dotfiles/. Bootstrap now creates it as a real folder first, like gtk-3.0. Any app that writes into its config folder needs the same.
+- Dotfiles are copied, not linked (stow was dropped). With links, anything that edited a config wrote into the repo: xfconf saved live settings into dotfiles/xfce4, GTK wrote bookmarks, the Claude Code installer appended a PATH line to .zshrc. Bootstrap removes old stow links before copying. Edit dotfiles in the repo and re-run bootstrap; edits made in $HOME get overwritten.
 - Colloid installs three variants. -Light has near-black tray icons (unreadable on a dark bar); the plain name mixes Light app icons with the Dark variant's status icons. Tray apps (nm-applet, blueman) only re-read the icon theme on restart.
 - Legacy tray icons (nm-applet, blueman use XEmbed) ignore CSS padding. Space them with the systray's square-icons; pad the other plugins' buttons in CSS.
 - Never `pkill -f <name>` from a script whose own command line contains <name>: it kills itself. Use `pkill -x` or match the exact path.
 - ASUS batteries can flick to "discharging" for ~30 s at 100% on AC. Check /var/lib/upower/history-time-empty-*.dat before blaming the charger. xfce4-power-manager's general-notification=false silences those popups; low/critical warnings stay.
 - libinput leaves tap-to-click off. An xorg.conf.d InputClass is the stable fix (any touchpad, login screen included); xfconf's pointers settings are tied to the device name.
+- Debian 13 ships pkexec as its own package. Without it, XFCE Power Manager's brightness slider moves but does nothing (it runs the backlight helper through pkexec).
+- `xfce4` pulls a polkit agent to satisfy a dependency; with --no-install-recommends apt picked ukui-polkit, which only autostarts on UKUI/MATE. Navi installs mate-polkit and autostarts it itself (dotfiles/autostart).
+- The screen goes black from three separate timers: X's own blanking (600 s default, `xset q`), DPMS, and XFCE Power Manager's idle dimming. XFCE 4.20 has no blank-on-* setting; X config handles blanking.
 - Proton VPN stores its login through python3-proton-keyring-linux, which needs a Secret Service (gnome-keyring). Without libpam-gnome-keyring the keyring stays locked and asks for its own password.
 
 ## Credits

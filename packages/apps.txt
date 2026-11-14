@@ -1,8 +1,7 @@
-# Hardware panels
-bluez
-blueman                       # Bluetooth: tray icon and pairing window
-xfce4-power-manager           # battery, brightness, lid and sleep settings
-xfce4-power-manager-plugins   # battery icon for the panel
+# Apps. Installed last, after Proton's apt repo is added (bootstrap.sh).
+
+# Browser: Debian's Firefox ESR, security fixes come through apt
+firefox-esr
 
 # Viewers and editor
 micro                         # terminal editor with normal shortcuts (Ctrl+S/C/V)
@@ -20,10 +19,16 @@ ripgrep                       # rg: search inside files
 fd-find                       # find files by name (Debian names the binary fdfind)
 
 # yazi previews and archives
+chafa                         # image previews inside Alacritty
 poppler-utils
 ffmpegthumbnailer
 7zip
 jq
 
-# App sandbox, used for Spotify
-flatpak
+# Proton (Proton Pass is a .deb, installed by bootstrap.sh)
+proton-vpn-gnome-desktop      # Proton VPN; "gnome" is only the name, works on XFCE
+gir1.2-ayatanaappindicator3-0.1   # Proton VPN tray icon (only "Suggested" upstream)
+
+# Security tools
+aircrack-ng                   # Wi-Fi auditing (airmon-ng, airodump-ng, aireplay-ng)
+ieee-data                     # vendor names for MAC addresses in airodump-ng

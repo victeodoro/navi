@@ -1,5 +1,10 @@
 # Navi: zsh
 
+# Per-user programs (navi-power, tools installed for your user only, e.g. claude).
+# Debian adds this in ~/.profile, which zsh doesn't read.
+typeset -U path                              # no duplicate entries
+path=("$HOME/.local/bin" $path)
+
 # --- History ---
 HISTFILE=~/.zsh_history
 HISTSIZE=50000

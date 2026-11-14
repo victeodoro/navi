@@ -3,8 +3,9 @@
 ## Manual pre-steps (fresh Debian 13 netinst, no desktop)
 
 1. Log as root (`su -`), install git and sudo (`apt install sudo git`) and set your user as part as sudo group (`usermod -aG sudo <user>`). Logout and the changes should take place.
-2. Clone this repo (`git clone git@github.com:victeodoro/navi.git`), then run `./bootstrap.sh`
+2. Clone this repo (`git clone https://github.com/victeodoro/navi.git`; HTTPS needs no SSH key yet), then run `./bootstrap.sh`
 3. Log into XFCE, then run `./xfce-settings.sh` from a terminal inside the desktop.
+4. Log out and back in once (touchpad, screen and keyring settings start on a new login). Details and personal steps: the install guide in NOTES.md.
 
 ## Decisions
 - Desktop: XFCE, minimal core with no goodies. Chose it over Cinnamon/Sway for being light and modular.
@@ -20,9 +21,13 @@
 - Shell: zsh (Kali's default too) with autosuggestions + syntax highlighting, starship prompt, fastfetch banner. Terminal: Alacritty only (xfce4-terminal removed).
 - File managers: Nemo (GUI, from Linux Mint, follows the GTK theme) + yazi (terminal, pinned GitHub release).
 - Apps: Blueman (Bluetooth), XFCE Power Manager (battery), micro (editor), Ristretto (pictures), zathura (PDF), btop/bat/fzf/ripgrep/fd (terminal), Spotify (Flatpak). See packages/apps.txt.
-- Proton: Proton VPN from Proton's signed apt repo (updates through apt), Proton Pass from Proton's .deb (updates itself). Logins live in gnome-keyring, unlocked at login. See packages/proton.txt.
+- Proton: Proton VPN from Proton's signed apt repo (updates through apt), Proton Pass from Proton's .deb (updates itself). Logins live in gnome-keyring, unlocked at login. See packages/apps.txt.
 - Icons: Colloid, plain "Colloid-Orange-Gruvbox" variant (light app icons, light tray icons for the dark bar). Only the menu and power buttons are custom SVGs (icons/).
 - Touchpad: tap to click, set for every touchpad in system/etc/X11/xorg.conf.d.
+- Screen: never blanks, dims or turns off by itself. Lock: only on demand (Super+L or the power menu), via light-locker, which shows the login screen.
+- Packages: packages/system.txt (below the desktop), desktop.txt (XFCE and its tools), apps.txt (apps, Proton, security tools), vm.txt (only inside a VM).
+- Dotfiles: copied into $HOME by bootstrap, not linked, so apps never write into the repo.
+- Security tools: aircrack-ng.
 
 ## Shortcuts
 | Keys | Action |
@@ -30,6 +35,7 @@
 | Super (tap) / Super+Space | App launcher (rofi); press again to close |
 | Super+Tab | Window switcher (rofi) |
 | Super+R | Run a command (rofi) |
+| Super+L | Lock the screen |
 | Super+Return | Terminal (Alacritty) |
 | Super+E | File manager (Nemo) |
 | Super+←/→/↑/↓ | Tile to left/right/top/bottom half (xfwm4) |
