@@ -140,6 +140,12 @@ xinput list --name-only | grep -i touchpad | while read -r dev; do
   xinput set-prop "$dev" "libinput Tapping Enabled" 1 || true
 done
 
+# --- Microphone: sane input level ---
+# At 100% PipeWire maxes both of the sound chip's boost stages (~66 dB on the
+# X515EA), so speaker sound and room noise come back in loud, and call apps
+# send an echoey, repeating mess. WirePlumber remembers the level afterwards.
+wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 0.40 || true
+
 # --- Workspaces ---
 xfconf-query -c xfwm4 -p /general/workspace_count -s 4
 xfconf-query -c xfwm4 -p /general/workspace_names -n \

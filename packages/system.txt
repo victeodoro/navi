@@ -18,6 +18,7 @@ xinput                        # applies touchpad settings live (scripts/desktop.
 pipewire
 alsa-utils                    # amixer/arecord for sound debugging, saves mixer levels
 pipewire-pulse
+pipewire-alsa                 # ALSA programs (arecord, some games/tools) go through PipeWire instead of fighting it for the device
 wireplumber
 rtkit                         # realtime priority for PipeWire
 
