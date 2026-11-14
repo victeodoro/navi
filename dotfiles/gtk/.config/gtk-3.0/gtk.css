@@ -55,7 +55,14 @@
 #clock-4 label { color: #fe8019; font-weight: bold; }
 #clock-4 button:hover { background: rgba(214, 93, 14, 0.25); }
 
-/* Right side */
+/* Right side: tray (network, Bluetooth, apps), battery, volume.
+ * Each gets horizontal room so the icons don't touch. Legacy tray icons
+ * (nm-applet, blueman) are X11 sockets that ignore CSS padding; the systray's
+ * square-icons setting gives each one a full-height cell instead. */
+#systray-6 { padding: 0 4px; }
+#power-manager-plugin-12 button,
+#pulseaudio-7 button { padding: 0 7px; }
+#power-manager-plugin-12 button:hover,
 #pulseaudio-7 button:hover,
 #systray-6 button:hover { background: rgba(214, 93, 14, 0.25); }
 #tasklist-2 button { padding: 0 8px; }

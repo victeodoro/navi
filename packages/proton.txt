@@ -1,0 +1,7 @@
+# Installed after Proton's apt repo is added (bootstrap.sh)
+proton-vpn-gnome-desktop          # Proton VPN app; "gnome" is only the name, works on XFCE
+gir1.2-ayatanaappindicator3-0.1   # Proton VPN tray icon (only "Suggested" upstream)
+
+# Secret storage: Proton VPN keeps its login here, Proton Pass encrypts its local data with it
+gnome-keyring
+libpam-gnome-keyring              # unlocks the keyring with your login password (LightDM)

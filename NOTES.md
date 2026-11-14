@@ -22,6 +22,13 @@
 - A custom tiling script (wmctrl) misplaced Firefox and was removed: apps that draw their own title bar report frames differently. xfwm4's built-in tiling handles them.
 - Panel hover styles look like rendering bugs in screenshots when the mouse is parked on the bar. Move the pointer away before judging.
 - Screenshots: the dialog's default action lives in ~/.config/xfce4/xfce4-screenshooter (action=2 is clipboard). Ctrl+C doesn't work in that dialog; Enter confirms. Clipman keeps the image after the tool exits.
+- Stow links a whole folder when the target doesn't exist yet. ~/.config/xfce4 ended up as a link into the repo, so xfconf saved live settings into dotfiles/. Bootstrap now creates it as a real folder first, like gtk-3.0. Any app that writes into its config folder needs the same.
+- Colloid installs three variants. -Light has near-black tray icons (unreadable on a dark bar); the plain name mixes Light app icons with the Dark variant's status icons. Tray apps (nm-applet, blueman) only re-read the icon theme on restart.
+- Legacy tray icons (nm-applet, blueman use XEmbed) ignore CSS padding. Space them with the systray's square-icons; pad the other plugins' buttons in CSS.
+- Never `pkill -f <name>` from a script whose own command line contains <name>: it kills itself. Use `pkill -x` or match the exact path.
+- ASUS batteries can flick to "discharging" for ~30 s at 100% on AC. Check /var/lib/upower/history-time-empty-*.dat before blaming the charger. xfce4-power-manager's general-notification=false silences those popups; low/critical warnings stay.
+- libinput leaves tap-to-click off. An xorg.conf.d InputClass is the stable fix (any touchpad, login screen included); xfconf's pointers settings are tied to the device name.
+- Proton VPN stores its login through python3-proton-keyring-linux, which needs a Secret Service (gnome-keyring). Without libpam-gnome-keyring the keyring stays locked and asks for its own password.
 
 ## Credits
 - Wallpaper `wallpapers/lain.png`: by patrika (https://alphacoders.com/users/profile/227699/patrika). Redistributed with attribution, as permitted by the author. Download link: https://wall.alphacoders.com/big.php?i=1371077

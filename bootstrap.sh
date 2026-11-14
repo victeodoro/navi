@@ -18,7 +18,7 @@ install_list packages/apps.txt
 # --- Dotfiles ---
 # Apps write their own files (e.g. GTK bookmarks) into these folders, so they
 # must be real directories; otherwise stow links the whole folder into the repo.
-mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/autostart" "$HOME/.local/bin" "$HOME/.config/micro"
+mkdir -p "$HOME/.config/gtk-3.0" "$HOME/.config/xfce4" "$HOME/.config/autostart" "$HOME/.local/bin" "$HOME/.config/micro"
 (cd dotfiles && stow -t "$HOME" --restow */)
 
 # VM-only packages, auto-detected
@@ -73,6 +73,34 @@ fi
 flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak --user install -y --noninteractive flathub com.spotify.Client
 
+# --- Proton VPN: Proton's own signed apt repo, so updates come through apt ---
+# The release package only adds the repo + its key. Pinned and checksum-verified.
+PROTONVPN_RELEASE="1.0.10"
+PROTONVPN_RELEASE_SHA256="c8a9fffb4ebdd63db08ce7f11c9b0ac394064ae6a210feb9ab63a0f7d8d060a7"
+if [ ! -f /etc/apt/sources.list.d/protonvpn-stable.sources ]; then
+  tmp="$(mktemp -d)"; chmod 755 "$tmp"
+  curl -fsSL -o "$tmp/release.deb" \
+    "https://repo.protonvpn.com/debian/dists/stable/main/binary-all/protonvpn-stable-release_${PROTONVPN_RELEASE}_all.deb"
+  echo "$PROTONVPN_RELEASE_SHA256  $tmp/release.deb" | sha256sum --check --quiet -
+  sudo dpkg -i "$tmp/release.deb"
+  rm -rf "$tmp"
+  sudo apt-get update
+fi
+install_list packages/proton.txt
+
+# --- Proton Pass: no apt repo, Proton ships a .deb. The app announces updates itself.
+# Only installed once, so a re-run never downgrades a newer self-updated version.
+PROTON_PASS_VERSION="1.43.1"
+PROTON_PASS_SHA512="0060237052fca72d74f985f6d93a0943c97a83592df368ee2516ebacc057de4f451fc8b8458f367f311bd5700da5849d815b3ccc8543718dbb22f80bd3cd949b"
+if ! dpkg -s proton-pass >/dev/null 2>&1; then
+  tmp="$(mktemp -d)"; chmod 755 "$tmp"   # apt reads local .debs as the _apt user
+  curl -fsSL -o "$tmp/proton-pass.deb" \
+    "https://proton.me/download/pass/linux/proton-pass_${PROTON_PASS_VERSION}_amd64.deb"
+  echo "$PROTON_PASS_SHA512  $tmp/proton-pass.deb" | sha512sum --check --quiet -
+  sudo apt-get install -y --no-install-recommends "$tmp/proton-pass.deb"
+  rm -rf "$tmp"
+fi
+
 # --- btop theme: btop rewrites its config, so only seed it once ---
 if [ ! -f "$HOME/.config/btop/btop.conf" ]; then
   mkdir -p "$HOME/.config/btop"
@@ -95,3 +123,6 @@ sudo install -m 644 system/etc/default/keyboard /etc/default/keyboard
 sudo setupcon || true
 
 sudo install -m 644 system/etc/network/interfaces /etc/network/interfaces
+
+# Touchpad: tap to click (applies on next login)
+sudo install -D -m 644 system/etc/X11/xorg.conf.d/30-touchpad.conf /etc/X11/xorg.conf.d/30-touchpad.conf

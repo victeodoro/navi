@@ -13,7 +13,9 @@ xfconf-query -c xfwm4     -p /general/theme     -s "Gruvbox-Orange-Light"
 xfconf-query -c xfwm4     -p /general/title_font   -n -t string -s "JetBrainsMono Nerd Font Bold 9"
 xfconf-query -c xfwm4     -p /general/button_layout -n -t string -s "|HMC"   # minimize, maximize, close on the right
 xfconf-query -c xfwm4     -p /general/title_alignment -n -t string -s "left"   # centered titles sit off-center: xfwm4 ignores the space the buttons take
-xfconf-query -c xsettings -p /Net/IconThemeName -s "Colloid-Orange-Gruvbox-Light"
+# Plain "Colloid-Orange-Gruvbox" = Light app icons + Dark-variant status icons,
+# so tray icons (network, Bluetooth) stay light on the dark bar. -Light makes them near-black.
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Colloid-Orange-Gruvbox"
 # Interface scale: 96 is 100%. Any value works, so this allows in-between sizes.
 xfconf-query -c xsettings -p /Xft/DPI -n -t int -s 84
 
@@ -99,6 +101,12 @@ p /plugins/plugin-8/style -t int -s 0
 launcher 9 navi-power "$HOME/.local/bin/navi-power" "$NAVI_DIR/icons/navi-power.svg"
 
 setsid -f xfce4-panel >/dev/null 2>&1
+
+# --- Battery notifications ---
+# Off: some laptops (ASUS) flicker to "discharging" for a few seconds at 100% while
+# plugged in, and each flicker popped a "N hours remaining" notice. Low and critical
+# battery warnings are separate and still show.
+xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/general-notification -n -t bool -s false
 
 # --- Workspaces ---
 xfconf-query -c xfwm4 -p /general/workspace_count -s 4

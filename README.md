@@ -20,6 +20,9 @@
 - Shell: zsh (Kali's default too) with autosuggestions + syntax highlighting, starship prompt, fastfetch banner. Terminal: Alacritty only (xfce4-terminal removed).
 - File managers: Nemo (GUI, from Linux Mint, follows the GTK theme) + yazi (terminal, pinned GitHub release).
 - Apps: Blueman (Bluetooth), XFCE Power Manager (battery), micro (editor), Ristretto (pictures), zathura (PDF), btop/bat/fzf/ripgrep/fd (terminal), Spotify (Flatpak). See packages/apps.txt.
+- Proton: Proton VPN from Proton's signed apt repo (updates through apt), Proton Pass from Proton's .deb (updates itself). Logins live in gnome-keyring, unlocked at login. See packages/proton.txt.
+- Icons: Colloid, plain "Colloid-Orange-Gruvbox" variant (light app icons, light tray icons for the dark bar). Only the menu and power buttons are custom SVGs (icons/).
+- Touchpad: tap to click, set for every touchpad in system/etc/X11/xorg.conf.d.
 
 ## Shortcuts
 | Keys | Action |
