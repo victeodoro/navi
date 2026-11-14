@@ -49,6 +49,7 @@ Personal, not scripted:
 - The code (VS Code) package adds its own copy of Microsoft's repo unless debconf says no (code/add-microsoft-repo). Two entries for one repo with different Signed-By keys make apt refuse to run.
 - Vendor apt keys here are ASCII-armored; apt reads them as-is when saved with a .asc extension, so no gpg --dearmor step (and no gnupg dependency).
 - Microsoft has no Teams app for Linux since 2022. teams-for-linux (Flathub) is a community wrapper of the web app.
+- Dead internal mic on ASUS X515EA (also seen on LMDE): it isn't hardware or a missing package. The kernel's generic ASUS quirk sets codec pin 0x13 as the internal mic (`/sys/class/sound/hwC0D0/driver_pin_configs`), but the BIOS (`init_pin_configs`) puts the real analog mic on 0x1b. Recording gave exact zeros. The fix is a hda patch file loaded with `snd-hda-intel patch=` that resets 0x13 to unused, since user pin configs override driver ones. If the mic is still silent after a reboot, delete `/etc/modprobe.d/navi-asus-x515ea-mic.conf` and reboot to undo it. Test with `arecord -d 3 /tmp/t.wav && aplay /tmp/t.wav`.
 
 ## Credits
 - Wallpaper `wallpapers/lain.png`: by patrika (https://alphacoders.com/users/profile/227699/patrika). Redistributed with attribution, as permitted by the author. Download link: https://wall.alphacoders.com/big.php?i=1371077

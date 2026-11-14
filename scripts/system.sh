@@ -97,3 +97,11 @@ sudo install -m 644 system/etc/network/interfaces /etc/network/interfaces
 sudo install -D -m 644 -t /etc/X11/xorg.conf.d \
   system/etc/X11/xorg.conf.d/30-touchpad.conf \
   system/etc/X11/xorg.conf.d/10-no-blanking.conf
+
+# Audio: ASUS X515EA internal mic (see the modprobe file). Only on that exact
+# codec (Realtek ALC256, ASUS subsystem 1043:102f); applies after a reboot.
+if grep -qx 0x10ec0256 /sys/class/sound/hwC*D*/vendor_id 2>/dev/null &&
+   grep -qx 0x1043102f /sys/class/sound/hwC*D*/subsystem_id 2>/dev/null; then
+  sudo install -D -m 644 system/usr/lib/firmware/navi/asus-x515ea-mic.fw /usr/lib/firmware/navi/asus-x515ea-mic.fw
+  sudo install -D -m 644 system/etc/modprobe.d/navi-asus-x515ea-mic.conf /etc/modprobe.d/navi-asus-x515ea-mic.conf
+fi
