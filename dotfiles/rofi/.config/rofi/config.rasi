@@ -5,6 +5,7 @@ configuration {
   icon-theme: "Colloid-Orange-Gruvbox";
   font: "JetBrainsMono Nerd Font 11";
   drun-display-format: "{name}";
+  terminal: "alacritty";          // for apps that run in a terminal (micro, btop...)
   display-drun: " apps";
   display-run: " run";
   display-window: " windows";

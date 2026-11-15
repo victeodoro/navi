@@ -9,6 +9,12 @@ sudo apt-get update
 install_list packages/system.txt
 install_list packages/desktop.txt
 
+# Default terminal: Alacritty. xorg needs "some terminal", and on a fresh install
+# it comes before Alacritty, so apt pulls in xterm. Both have the same priority,
+# so xterm could win and apps marked Terminal=true (micro from the menu, text
+# files from Nemo) opened in xterm. GLib and rofi both follow this alternative.
+sudo update-alternatives --set x-terminal-emulator /usr/bin/alacritty
+
 # VM-only packages, auto-detected
 if systemd-detect-virt -q; then
   install_list packages/vm.txt

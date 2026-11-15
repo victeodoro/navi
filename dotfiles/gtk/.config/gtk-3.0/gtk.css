@@ -78,9 +78,14 @@ menu, .menu, .context-menu {
   font-size: 9pt;
 }
 menu menuitem { padding: 5px 12px; border-radius: 4px; color: #ebdbb2; }
+/* Every label in a menu, not only direct menuitem text: the network menu's
+ * "Available networks" / "VPN Connections" parts build their own rows, which
+ * fell back to the light theme's near-black text on our dark background. */
+menu label, .menu label, .context-menu label { color: #ebdbb2; }
+menu label:disabled, menu label.separator { color: #a89984; }
 menu menuitem:hover { background: #d65d0e; color: #1d2021; }
 menu menuitem:hover label { color: #1d2021; }
-menu menuitem:disabled, menu menuitem:disabled label { color: #665c54; }
+menu menuitem:disabled, menu menuitem:disabled label { color: #a89984; }   /* section titles: readable, just dimmer */
 menu separator { background: #3c3836; min-height: 1px; margin: 4px 6px; }
 menu check, menu radio { color: #fe8019; }
 menu arrow { color: #a89984; }

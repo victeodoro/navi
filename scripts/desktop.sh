@@ -138,6 +138,7 @@ gsettings set apps.light-locker lock-on-lid false
 # --- Touchpad: tap to click, live (the X config in system/ covers the next login) ---
 xinput list --name-only | grep -i touchpad | while read -r dev; do
   xinput set-prop "$dev" "libinput Tapping Enabled" 1 || true
+  xinput set-prop "$dev" "libinput Scroll Method Enabled" 1 0 0 || true   # two-finger scroll
 done
 
 # --- Microphone: sane input level ---

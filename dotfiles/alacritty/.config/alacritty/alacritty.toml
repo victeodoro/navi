@@ -17,6 +17,12 @@ bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
 italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 
+# Alacritty has no scrollbar by design. Scroll with the touchpad (two fingers),
+# the mouse wheel, or the keyboard: Shift+PageUp / Shift+PageDown, Shift+Home / Shift+End.
+[scrolling]
+history = 50000
+multiplier = 3
+
 [cursor]
 style = { shape = "Beam", blinking = "On" }
 

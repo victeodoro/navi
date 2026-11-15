@@ -18,7 +18,7 @@ Re-running `./install.sh` (also from inside the desktop) is safe: installed apps
 |---|---|---|
 | all | Firefox ESR, Chromium, Obsidian, Postman, omp, Burp Suite Community, nmap, aircrack-ng, micro, zathura, Ristretto, btop/bat/fzf/ripgrep/fd | always |
 | personal | Spotify, Proton VPN, Proton Pass | without `--work` |
-| work | Teams (teams-for-linux), Slack, LibreOffice, Cloudflare WARP, Heroku CLI, gcloud, Claude Code, VS Code | `--work`, each one picked in the menu |
+| work | Teams (teams-for-linux), Slack, LibreOffice, Cloudflare WARP, Heroku CLI, gcloud, Claude Code, VS Code, Bitwarden, Ente Auth | `--work`, each one picked in the menu |
 
 Debian apps are listed in packages/apps.txt; everything else has a recipe in scripts/apps.sh (to add an app: write an `app_<id>` function and put the id in one of the lists at the top).
 
@@ -36,7 +36,7 @@ Debian apps are listed in packages/apps.txt; everything else has a recipe in scr
 - Shell: zsh (Kali's default too) with autosuggestions + syntax highlighting, starship prompt, fastfetch banner. Terminal: Alacritty only (xfce4-terminal removed).
 - File managers: Nemo (GUI, from Linux Mint, follows the GTK theme) + yazi (terminal, pinned GitHub release).
 - Hardware panels: Blueman (Bluetooth), XFCE Power Manager (battery, brightness).
-- App sources, in order of preference: Debian apt > the vendor's signed apt repo (WARP, gcloud, VS Code, Proton VPN) > Flathub (Spotify, Teams, Slack, Obsidian, Postman) > the vendor's installer (Proton Pass, Heroku, Claude Code, omp, Burp). Self-updating apps install per-user so their updater can write to its own folder.
+- App sources, in order of preference: Debian apt > the vendor's signed apt repo (WARP, gcloud, VS Code, Proton VPN) > Flathub (Spotify, Teams, Slack, Obsidian, Postman, Bitwarden, Ente Auth) > the vendor's installer (Proton Pass, Heroku, Claude Code, omp, Burp). Self-updating apps install per-user so their updater can write to its own folder.
 - Install scripts: install.sh is the entry point; it runs scripts/system.sh (packages, dotfiles, themes, system files), scripts/apps.sh (apps) and scripts/desktop.sh (XFCE settings; needs the session, so on a fresh install it runs on the first login).
 - Logins (Proton, Slack, VS Code...) live in gnome-keyring, unlocked at login.
 - Icons: Colloid, plain "Colloid-Orange-Gruvbox" variant (light app icons, light tray icons for the dark bar). Only the menu and power buttons are custom SVGs (icons/).
