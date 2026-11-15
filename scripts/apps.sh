@@ -13,8 +13,8 @@
 # vendor's own installer. Apps that update themselves install per-user, so
 # their updater can write to its own folder.
 
-ALL_APPS=(obsidian postman omp burp)
-PERSONAL_APPS=(spotify proton)
+ALL_APPS=(obsidian postman omp burp proton)
+PERSONAL_APPS=(spotify)
 # "id|description" for the --work menu, in menu order
 WORK_APPS=(
   "teams|Microsoft Teams (teams-for-linux; Microsoft has no Linux app)"
@@ -25,8 +25,6 @@ WORK_APPS=(
   "gcloud|Google Cloud CLI (gcloud)"
   "claude|Claude Code (claude CLI)"
   "vscode|Visual Studio Code"
-  "bitwarden|Bitwarden password manager (open source, syncs with phone)"
-  "enteauth|Ente Auth 2FA codes (open source, syncs with phone)"
 )
 
 # ---------- all ----------
@@ -89,8 +87,6 @@ app_proton() {
 # ---------- work ----------
 app_teams()       { flatpak_app com.github.IsmaelMartinez.teams_for_linux; }
 app_slack()       { flatpak_app com.slack.Slack; }
-app_bitwarden()   { flatpak_app com.bitwarden.desktop; }
-app_enteauth()    { flatpak_app io.ente.auth; }
 app_libreoffice() { apt_install libreoffice-writer libreoffice-calc libreoffice-impress libreoffice-gtk3 libreoffice-style-colibre; }
 
 app_warp() {
