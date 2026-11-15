@@ -78,14 +78,16 @@ menu, .menu, .context-menu {
   font-size: 9pt;
 }
 menu menuitem { padding: 5px 12px; border-radius: 4px; color: #ebdbb2; }
-/* Every label in a menu, not only direct menuitem text: the network menu's
- * "Available networks" / "VPN Connections" parts build their own rows, which
- * fell back to the light theme's near-black text on our dark background. */
+/* Every label in a menu, including rows apps build themselves (network list). */
 menu label, .menu label, .context-menu label { color: #ebdbb2; }
 menu label:disabled, menu label.separator { color: #a89984; }
 menu menuitem:hover { background: #d65d0e; color: #1d2021; }
-menu menuitem:hover label { color: #1d2021; }
-menu menuitem:disabled, menu menuitem:disabled label { color: #a89984; }   /* section titles: readable, just dimmer */
+/* Child selectors (>) on purpose: a submenu is a child of the item that opened
+ * it, so "menuitem:hover label" also hit every label in the open submenu and
+ * painted the network list and VPN submenu dark on dark. */
+menu > menuitem:hover > label,
+menu > menuitem:hover > box > label { color: #1d2021; }
+menu menuitem:disabled, menu > menuitem:disabled > label, menu > menuitem:disabled > box > label { color: #a89984; }   /* section titles: readable, just dimmer */
 menu separator { background: #3c3836; min-height: 1px; margin: 4px 6px; }
 menu check, menu radio { color: #fe8019; }
 menu arrow { color: #a89984; }
